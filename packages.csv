@@ -1,0 +1,20 @@
+name, description, github_link, cran_link
+dsBase, The dsBase package, https://github.com/datashield/dsbase, https://cran.r-project.org/package=dsBase
+dsBaseClient, The dsBaseClient package, https://github.com/datashield/dsbaseclient, https://cran.r-project.org/package=dsBaseClient
+dsTidyverse, The dsTidyverse package, https://github.com/molgenis/ds-tidyverse, https://cran.r-project.org/package=dsTidyverse
+dsTidyverseClient, The dsTidyverseClient package, https://github.com/molgenis/ds-tidyverse-client, https://cran.r-project.org/package=dsTidyverseClient
+dsOMOP, The dsOMOP package, https://github.com/isglobal-brge/dsOMOP,
+dsOMOPClient, The dsOMOPClient package, https://github.com/isglobal-brge/dsOMOPClient,
+dsMTLBase, Multitask learning, https://github.com/transbioZI/dsMTLBase,
+dsMTLClient, Multitask learning, https://github.com/transbioZI/dsMTLClient,
+dsMediation, Mediation analysis package, https://github.com/datashield/dsMediation,
+dsMediationClient, Mediation analysis package, https://github.com/datashield/dsMediationClient,
+dsML, Machine learning package, https://github.com/isglobal-brge/dsML,
+dsMLClient, Machine learning package, https://github.com/isglobal-brge/dsMLClient,
+dsOmics, Omics package, https://github.com/isglobal-brge/dsOmics,
+dsOmicsClient, Omics package, https://github.com/isglobal-brge/dsOmicsClient,
+dsSurvival, Survival package, https://github.com/neelsoumya/dsSurvival,
+dsSurvivalClient, Survival package, https://github.com/neelsoumya/dsSurvivalClient,
+dsBinVal, ROC analysis, https://github.com/difuture-lmu/dsBinVal,
+dsBoltzmannMachines, Deep Boltzmann machines package, https://github.com/stefan-m-lenz/dsBoltzmannMachines,
+dsBoltzmannMachinesClient, Deep Boltzmann machines package, https://github.com/stefan-m-lenz/dsBoltzmannMachinesClient,

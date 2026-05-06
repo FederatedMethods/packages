@@ -1,0 +1,127 @@
+# Start with a list of packages in packages.csv, and get external data about them (e.g. last commit date) to generate an HTML page with the package information. This workflow is triggered manually from the Actions tab.
+# Olly Butters
+# 1/5/26
+name: Package list
+
+# Controls when the workflow will run
+on:
+  #push:
+  #  branches: [ "main" ]
+  #pull_request:
+  #  branches: [ "main" ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-slim
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      #- uses: r-lib/actions/setup-r@v2
+      #  with:
+      #    r-version: release
+      #    use-public-rspm: true
+
+      # Parse the package list, get the external data, and write to a new CSV file
+      - name: Build package data
+        run: |
+          echo $GITHUB_WORKSPACE
+          ls $GITHUB_WORKSPACE
+
+          # Create new output file
+          echo "Name,Description,CRAN link,CRAN version, CRAN license,GitHub link,Last commit,GitHub version" > output.csv
+          
+          while IFS="," read -r name description gh_link cran_link
+          do
+            echo "name: $name"
+            echo "desc: $description"
+            echo "github_link: $gh_link"
+            echo "cran_link: $cran_link"
+            echo ""
+
+            ##### GitHub info
+            # Extract the repo name from the GitHub link
+            gh_repo_name=$(echo $gh_link | awk -F/ '{print $NF}')
+            echo $gh_repo_name
+
+            # clone the repo
+            git clone $gh_link
+            cd $gh_repo_name
+
+            # Last commit date of repo
+            gh_last_commit=$(git log -1 --format=%cs)
+            echo "last commit: $gh_last_commit"
+
+            # Last release
+            gh_last_release=$(git describe --tags $(git rev-list --tags --max-count=1))
+            echo "last GitHub release: $gh_last_release"
+
+            # Tidy up
+            cd ..
+            rm -rf $gh_repo_name
+
+            ##### CRAN info
+            if [ -z "$cran_link" ]; then
+              cran_version=""
+              cran_license=""
+            else
+            
+              # Get CRAN package name from cran_link
+              CRAN_package_name=$(echo $cran_link | awk -F= '{print $NF}')
+              echo "$CRAN_package_name"
+
+              # Get the version number from CRAN
+              # This is overkill really, it takes ages to install all the R dependencies. Could just parse the CRAN DESCRIPTION file. 
+              #version=$(Rscript --vanilla -e 'print(subset(tools::CRAN_package_db(), Package == "dsBase")[["Version"]], row.names=FALSE)')
+              #echo "version: $version"
+
+              cran_description_file_link="https://cran.r-project.org/web/packages/${CRAN_package_name}/DESCRIPTION"
+              wget --content-on-error $cran_description_file_link
+
+              # might not be on the CRAN
+              if [ -f DESCRIPTION ]; then
+                cran_version=$(grep -oP '^Version:\s*\K([a-zA-Z0-9\. _-]+)\s*$' DESCRIPTION)
+                cran_license=$(grep -oP '^License:\s*\K([a-zA-Z0-9\. _\-\(\)><=]+)\s*$' DESCRIPTION)
+                
+                # tidy up
+                rm DESCRIPTION
+              else
+                cran_version=""
+                cran_license=""
+              fi
+            fi
+
+            echo "version: $cran_version"          
+            echo "License: $cran_license"
+
+            # write to file
+            echo "$name,$description,$cran_link,$cran_version,$cran_license,$gh_link,$gh_last_commit,$gh_last_release" >> output.csv
+
+            echo ""
+
+          done < <(tail -n +2 packages.csv)
+
+      # Parse the output CSV file and generate an HTML page
+      - name: build html page
+        run: |
+          python3 build_packages_page.py
+
+      # Keep the generated CSV file as an artifact for development purposes
+      - name: upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          path: packages.csv
+
+      # Commit the generated HTML file back to the repository
+      - name: Commit output
+        run: |
+          cat output.csv
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+          git add table.html
+          git commit -m "Add generated html file"
+          git push
