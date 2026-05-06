@@ -102,7 +102,7 @@ jobs:
 
             echo ""
             
-            gh repo view --json codeOfConduct,owner
+            gh repo view --json codeOfConduct,description,homepageUrl,licenseInfo,owner,parent,updatedAt
 
           done < <(tail -n +2 packages.csv)
 
