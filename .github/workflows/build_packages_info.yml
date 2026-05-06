@@ -5,12 +5,11 @@ name: Package list
 
 # Controls when the workflow will run
 on:
-  #push:
-  #  branches: [ "main" ]
-  #pull_request:
-  #  branches: [ "main" ]
-
-  # Allows you to run this workflow manually from the Actions tab
+  schedule:
+    - cron: '30 5 * * 0'
+      timezone: "Europe/London"
+  push:
+    branches: [ "main" ]
   workflow_dispatch:
 
 jobs:
@@ -20,11 +19,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-
-      #- uses: r-lib/actions/setup-r@v2
-      #  with:
-      #    r-version: release
-      #    use-public-rspm: true
 
       # Parse the package list, get the external data, and write to a new CSV file
       - name: Build package data
@@ -110,7 +104,7 @@ jobs:
         run: |
           python3 build_packages_page.py
           mkdir gh-pages
-          mv table.html gh-pages/
+          mv table.html gh-pages/index.html
 
       # Keep the generated CSV file as an artifact for development purposes
       - name: upload artifact
@@ -124,22 +118,12 @@ jobs:
         with:
           path: gh-pages
 
-      # Commit the generated HTML file back to the repository
-      #- name: Commit output
-      #  run: |
-      #    cat output.csv
-      #    git config --global user.name "GitHub Actions"
-      #    git config --global user.email "actions@github.com"
-      #    git add table.html
-      #    git commit -m "Add generated html file"
-      #    git push
-
   # Deployment job
   deploy:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-slim
     permissions:
       pages: write
       id-token: write
