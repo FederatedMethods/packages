@@ -52,7 +52,7 @@ jobs:
 
             # Last release
             if [ $(git rev-list --tags --max-count=1) ]; then
-              gh_last_release=$(git describe --tags $(git rev-list --tags --max-count=1)) &&
+              gh_last_release=$(git describe --tags $(git rev-list --tags --max-count=1))
             else
               gh_last_release=""
             fi
