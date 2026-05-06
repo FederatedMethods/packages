@@ -53,8 +53,7 @@ jobs:
             # Last release
             {
               gh_last_release=$(git describe --tags $(git rev-list --tags --max-count=1)) &&
-            } ||
-            {
+            } || {
               gh_last_release=""
             }
             echo "last GitHub release: $gh_last_release"
