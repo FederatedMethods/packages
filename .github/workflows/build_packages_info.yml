@@ -109,6 +109,8 @@ jobs:
       - name: build html page
         run: |
           python3 build_packages_page.py
+          mkdir gh-pages
+          mv table.html gh-pages/
 
       # Keep the generated CSV file as an artifact for development purposes
       - name: upload artifact
@@ -120,7 +122,7 @@ jobs:
         id: deployment
         uses: actions/upload-pages-artifact@v3 # or specific "vX.X.X" version tag for this action
         with:
-          path: table.html
+          path: gh-pages
 
       # Commit the generated HTML file back to the repository
       - name: Commit output
