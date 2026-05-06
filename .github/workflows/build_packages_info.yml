@@ -59,8 +59,8 @@ jobs:
             
             echo "last GitHub release: $gh_last_release"
 
-            gh repo view --json
-            #codeOfConduct,description,homepageUrl,licenseInfo,owner,parent,updatedAt
+            gh repo view --json codeOfConduct,description,homepageUrl,licenseInfo,owner,parent,updatedAt > gh_repo_info.json
+            cat gh_repo_info.json
 
             # Tidy up
             cd ..
