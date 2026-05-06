@@ -59,6 +59,8 @@ jobs:
             
             echo "last GitHub release: $gh_last_release"
 
+            gh repo view --json codeOfConduct,description,homepageUrl,licenseInfo,owner,parent,updatedAt
+
             # Tidy up
             cd ..
             rm -rf $gh_repo_name
@@ -102,7 +104,6 @@ jobs:
 
             echo ""
             
-            gh repo view --json codeOfConduct,description,homepageUrl,licenseInfo,owner,parent,updatedAt
 
           done < <(tail -n +2 packages.csv)
 
