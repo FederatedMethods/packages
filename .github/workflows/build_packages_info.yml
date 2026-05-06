@@ -51,11 +51,12 @@ jobs:
             echo "last commit: $gh_last_commit"
 
             # Last release
-            {
+            if [ -z $(git rev-list --tags --max-count=1) ]; then
               gh_last_release=$(git describe --tags $(git rev-list --tags --max-count=1)) &&
-            } || {
+            else
               gh_last_release=""
-            }
+            fi
+            
             echo "last GitHub release: $gh_last_release"
 
             # Tidy up
