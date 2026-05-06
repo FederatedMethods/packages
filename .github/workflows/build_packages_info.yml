@@ -27,7 +27,7 @@ jobs:
           ls $GITHUB_WORKSPACE
 
           # Create new output file
-          echo "Name,Description,CRAN link,CRAN version, CRAN license,GitHub link,Last commit,GitHub version" > output.csv
+          echo "Name,Description,CRAN link,CRAN version, CRAN license,GitHub link,Last commit,GitHub version,GitHub license" > output.csv
           
           while IFS="," read -r name description gh_link cran_link
           do
@@ -61,6 +61,8 @@ jobs:
 
             gh repo view --json codeOfConduct,description,homepageUrl,licenseInfo,owner,parent,updatedAt > gh_repo_info.json
             cat gh_repo_info.json
+
+            gh_license=$(cat gh_repo.info.json | jq '.licenseInfo.nickname')
 
             # Tidy up
             cd ..
@@ -101,7 +103,7 @@ jobs:
             echo "License: $cran_license"
 
             # write to file
-            echo "$name,$description,$cran_link,$cran_version,$cran_license,$gh_link,$gh_last_commit,$gh_last_release" >> output.csv
+            echo "$name,$description,$cran_link,$cran_version,$cran_license,$gh_link,$gh_last_commit,$gh_last_release,$gh_license" >> output.csv
 
             echo ""
             
