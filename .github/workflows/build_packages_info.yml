@@ -104,6 +104,10 @@ jobs:
 
           done < <(tail -n +2 packages.csv)
 
+          gh repo view --json owner
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       # Parse the output CSV file and generate an HTML page
       - name: build html page
         run: |
