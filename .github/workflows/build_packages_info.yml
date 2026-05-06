@@ -84,7 +84,7 @@ jobs:
               # might not be on the CRAN
               if [ -f DESCRIPTION ]; then
                 cran_version=$(grep -oP '^Version:\s*\K([a-zA-Z0-9\. _-]+)\s*$' DESCRIPTION)
-                cran_license=$(grep -oP '^License:\s*\K([a-zA-Z0-9\. _\-\(\)><=]+)\s*$' DESCRIPTION)
+                cran_license=$(grep -oP '^License:\s*\K([a-zA-Z0-9\. _\-\(\)><=\+]+)\s*$' DESCRIPTION)
                 
                 # tidy up
                 rm DESCRIPTION
