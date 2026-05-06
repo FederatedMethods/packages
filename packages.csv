@@ -1,57 +1,36 @@
 name, description, github_link, cran_link
 dsBase, The dsBase package, https://github.com/datashield/dsbase, https://cran.r-project.org/package=dsBase
 dsBaseClient, The dsBaseClient package, https://github.com/datashield/dsbaseclient, https://cran.r-project.org/package=dsBaseClient
-
 dsBinVal, ROC analysis, https://github.com/difuture-lmu/dsBinVal,
-
 dsBoltzmannMachines, Deep Boltzmann machines package, https://github.com/stefan-m-lenz/dsBoltzmannMachines,
 dsBoltzmannMachinesClient, Deep Boltzmann machines package, https://github.com/stefan-m-lenz/dsBoltzmannMachinesClient,
-
 dsCalibration, Calibration assessment package, https://github.com/difuture-lmu/dsCalibration,
-
 dsClusterAnalysis, Cluster analysis package, https://github.com/FlorianSchw/dsClusterAnalysis,
 dsClusterAnalysisClient, Cluster analysis package, https://github.com/FlorianSchw/dsClusterAnalysisClient,
-
 dsDanger, Danger package, https://github.com/datashield/dsDanger,
 dsDangerClient, Danger package, https://github.com/datashield/dsDangerClient,
-
 dsDashboard, Dashboard package, https://github.com/bips-hb/dsDashboard,
-
 dsExposome, Exposome package, https://github.com/isglobal-brge/dsExposome,
 dsExposomeClient, Exposome package, https://github.com/isglobal-brge/dsExposomeClient,
-
 dsGeo, Geo package, https://github.com/datashield/dsGeo,
 dsGeoClient, Geo package, https://github.com/datashield/dsGeoClient,
-
 ds-helper, Helper package, https://github.com/timcadman/ds-helper,
-
 dsMediation, Mediation analysis package, https://github.com/datashield/dsMediation,
 dsMediationClient, Mediation analysis package, https://github.com/datashield/dsMediationClient,
-
 dsMicrobiome, Microbiome package, https://github.com/StuartWheater/dsMicrobiome,
 dsMicrobiomeClient, Microbiome package, https://github.com/StuartWheater/dsMicrobiomeClient,
-
 dsML, Machine learning package, https://github.com/isglobal-brge/dsML,
 dsMLClient, Machine learning package, https://github.com/isglobal-brge/dsMLClient,
-
 dsMTLBase, Multitask learning, https://github.com/transbioZI/dsMTLBase,
 dsMTLClient, Multitask learning, https://github.com/transbioZI/dsMTLClient,
-
 dsOmics, Omics package, https://github.com/isglobal-brge/dsOmics,
 dsOmicsClient, Omics package, https://github.com/isglobal-brge/dsOmicsClient,
-
 dsOMOP, The dsOMOP package, https://github.com/isglobal-brge/dsOMOP,
 dsOMOPClient, The dsOMOPClient package, https://github.com/isglobal-brge/dsOMOPClient,
-
 dsOMOPHelper, OMOP helper package, https://github.com/isglobal-brge/dsOMOPHelper,
-
 dsPrivacy, Differential privacy package, https://github.com/arkhn-oss/dsPrivacy,
 dsPrivacyClient, Differential privacy package, https://github.com/arkhn-oss/dsPrivacyClient,
-
 dsSurvival, Survival package, https://github.com/neelsoumya/dsSurvival,
 dsSurvivalClient, Survival package, https://github.com/neelsoumya/dsSurvivalClient,
-
 dsTidyverse, The dsTidyverse package, https://github.com/molgenis/ds-tidyverse, https://cran.r-project.org/package=dsTidyverse
 dsTidyverseClient, The dsTidyverseClient package, https://github.com/molgenis/ds-tidyverse-client, https://cran.r-project.org/package=dsTidyverseClient
-
-
