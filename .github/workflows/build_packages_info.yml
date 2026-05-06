@@ -125,14 +125,14 @@ jobs:
           path: gh-pages
 
       # Commit the generated HTML file back to the repository
-      - name: Commit output
-        run: |
-          cat output.csv
-          git config --global user.name "GitHub Actions"
-          git config --global user.email "actions@github.com"
-          git add table.html
-          git commit -m "Add generated html file"
-          git push
+      #- name: Commit output
+      #  run: |
+      #    cat output.csv
+      #    git config --global user.name "GitHub Actions"
+      #    git config --global user.email "actions@github.com"
+      #    git add table.html
+      #    git commit -m "Add generated html file"
+      #    git push
 
   # Deployment job
   deploy:
