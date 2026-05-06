@@ -101,10 +101,12 @@ jobs:
             echo "$name,$description,$cran_link,$cran_version,$cran_license,$gh_link,$gh_last_commit,$gh_last_release" >> output.csv
 
             echo ""
+            
+            gh repo view --json owner
 
           done < <(tail -n +2 packages.csv)
 
-          gh repo view --json owner
+          
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
