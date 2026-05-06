@@ -142,6 +142,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       pages: write
+      id-token: write
     needs: build
     steps:
       - name: Deploy to GitHub Pages
