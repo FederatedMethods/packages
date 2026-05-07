@@ -65,7 +65,7 @@ jobs:
 
             # Get the license as it appears in GitHub
             gh_license=$(cat gh_repo_info.json | jq '.licenseInfo.nickname')
-            if [ -z "gh_license" ]; then
+            if [ -z "$gh_license" ]; then
               gh_license=$(cat gh_repo_info.json | jq '.licenseInfo.name')
             fi
 
