@@ -30,6 +30,7 @@ def main(csv_file_path, html_file_path):
                 html_file.write('<td>' + row[6] + '</td>') # GH last update
                 html_file.write('<td>' + row[7] + '</td>') # GH version
                 html_file.write('<td>' + row[8] + '</td>') # GH license
+                html_file.write('<td>' + row[9] + '</td>') # GH owner
                 html_file.write('</tr>\n')
 
             html_file.write('</table>')
