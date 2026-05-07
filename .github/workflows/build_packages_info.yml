@@ -31,6 +31,7 @@ jobs:
           
           while IFS="," read -r name description gh_link cran_link
           do
+            echo "-----------------------------------"
             echo "name: $name"
             echo "desc: $description"
             echo "github_link: $gh_link"
@@ -38,6 +39,8 @@ jobs:
             echo ""
 
             ##### GitHub info
+            echo "GitHub repo information"
+            
             # Extract the repo name from the GitHub link
             gh_repo_name=$(echo $gh_link | awk -F/ '{print $NF}')
             echo $gh_repo_name
@@ -60,7 +63,9 @@ jobs:
             echo "last GitHub release: $gh_last_release"
 
             # Use the GitHub API to pull in info about the repoisitory
+            echo "GitHub API information"
             gh repo view --json codeOfConduct,description,homepageUrl,licenseInfo,owner,parent,updatedAt > gh_repo_info.json
+            echo "API response:"
             cat gh_repo_info.json
 
             # Get the license as it appears in GitHub
@@ -69,11 +74,14 @@ jobs:
               gh_license=$(cat gh_repo_info.json | jq '.licenseInfo.name')
             fi
 
+            echo "GitHub license: $gh_license"
+
             # Tidy up
             cd ..
             rm -rf $gh_repo_name
 
             ##### CRAN info
+            echo "CRAN information"
             if [ -z "$cran_link" ]; then
               cran_version=""
               cran_license=""
@@ -81,7 +89,7 @@ jobs:
             
               # Get CRAN package name from cran_link
               CRAN_package_name=$(echo $cran_link | awk -F= '{print $NF}')
-              echo "$CRAN_package_name"
+              echo "CRAN package name: $CRAN_package_name"
 
               # Get the version number from CRAN
               # This is overkill really, it takes ages to install all the R dependencies. Could just parse the CRAN DESCRIPTION file. 
@@ -104,14 +112,13 @@ jobs:
               fi
             fi
 
-            echo "version: $cran_version"          
-            echo "License: $cran_license"
+            echo "CRAN version: $cran_version"          
+            echo "CRAN license: $cran_license"
 
             # write to file
             echo "$name,$description,$cran_link,$cran_version,$cran_license,$gh_link,$gh_last_commit,$gh_last_release,$gh_license" >> output.csv
 
-            echo ""
-            
+            echo "-----------------------------------"            
 
           done < <(tail -n +2 packages.csv)
 
