@@ -27,7 +27,7 @@ jobs:
           ls $GITHUB_WORKSPACE
 
           # Create new output file
-          echo "Name,Description,CRAN link,CRAN version, CRAN license,GitHub link,Last commit,GitHub version,GitHub license,Github owner,GitHub code of conduct" > output.csv
+          echo "Name,Description,CRAN link,CRAN version, CRAN license,GitHub link,Last commit,GitHub version,GitHub license,Github owner" > output.csv
           
           while IFS="," read -r name description gh_link cran_link
           do
@@ -122,7 +122,7 @@ jobs:
             echo "CRAN license: $cran_license"
 
             # write to file
-            echo "$name,$description,$cran_link,$cran_version,$cran_license,$gh_link,$gh_last_commit,$gh_last_release,$gh_license,$gh_owner,$gh_code_of_conduct" >> output.csv
+            echo "$name,$description,$cran_link,$cran_version,$cran_license,$gh_link,$gh_last_commit,$gh_last_release,$gh_license,$gh_owner" >> output.csv
 
             echo "-----------------------------------"            
 
