@@ -39,6 +39,8 @@ dsQueryLibrary, OHDSI query library implementation, https://github.com/sib-swiss
 dsROCrate, RO-Crate interface, https://github.com/FederatedMethods/dsROCrate, https://cran.r-project.org/package=dsROCrate
 dsSurvival, Survival package, https://github.com/neelsoumya/dsSurvival,
 dsSurvivalClient, Survival package, https://github.com/neelsoumya/dsSurvivalClient,
+dsSurvival, Survival package, https://github.com/datashield/dsSurvival,
+dsSurvivalClient, Survival package, https://github.com/datashield/dsSurvivalClient,
 dsSwissKnife, , https://github.com/sib-swiss/dsSwissKnife,
 dsSwissKnifeClient, , https://github.com/sib-swiss/dsSwissKnifeClient,
 dsSynthetic, Synthetic data generation,  https://github.com/tombisho/dsSynthetic,
