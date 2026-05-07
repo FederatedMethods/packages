@@ -7,6 +7,8 @@ dsBoltzmannMachinesClient, Deep Boltzmann machines package, https://github.com/s
 dsCalibration, Calibration assessment package, https://github.com/difuture-lmu/dsCalibration,
 dsClusterAnalysis, Cluster analysis package, https://github.com/FlorianSchw/dsClusterAnalysis,
 dsClusterAnalysisClient, Cluster analysis package, https://github.com/FlorianSchw/dsClusterAnalysisClient,
+dsCoda, Coda package, https://github.com/datashield/dsCoda, 
+dsCodaClient, Coda package, https://github.com/datashield/dsCodaClient, 
 dsDanger, Danger package, https://github.com/datashield/dsDanger,
 dsDangerClient, Danger package, https://github.com/datashield/dsDangerClient,
 dsDashboard, Dashboard package, https://github.com/bips-hb/dsDashboard,
