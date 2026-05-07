@@ -1,20 +1,25 @@
 import csv
+import datetime
 
 def main(csv_file_path, html_file_path):
     with open(html_file_path, 'w') as html_file:
 
         html_file.write('<html>\n<head>\n<title>Packages</title>\n</head>\n<body>\n')
-        html_file.write('<h1>Packages</h1>\n')
+        html_file.write('<h1>DataSHIELD packages</h1>\n')
 
         with open(csv_file_path, 'r') as csv_file:
             reader = csv.reader(csv_file)
             headers = next(reader)
 
             html_file.write('<table border="1">\n')
-            html_file.write('<tr>' + ''.join(f'<th>{header}</th>' for header in headers) + '</tr>\n')
+            html_file.write('<tr><td></td>' + ''.join(f'<th>{header}</th>' for header in headers) + '</tr>\n')
 
+            row_count = 0
             for row in reader:
+                print(row)
+                row_count += 1
                 html_file.write('<tr>')
+                html_file.write('<td>' + str(row_count) + '</td>') # Row number
                 html_file.write('<td>' + row[0] + '</td>') # Name
                 html_file.write('<td>' + row[1] + '</td>') # Description
                 if len(row[2]) > 0:
@@ -31,9 +36,12 @@ def main(csv_file_path, html_file_path):
                 html_file.write('<td>' + row[7] + '</td>') # GH version
                 html_file.write('<td>' + row[8] + '</td>') # GH license
                 html_file.write('<td>' + row[9] + '</td>') # GH owner
+                html_file.write('<td>' + row[10] + '</td>') # GH code of conduct
                 html_file.write('</tr>\n')
 
             html_file.write('</table>')
+
+        html_file.write('Generated on ' + datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
 
         html_file.write('</body>\n</html>')
 
