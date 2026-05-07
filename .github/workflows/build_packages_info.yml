@@ -39,7 +39,7 @@ jobs:
             echo ""
 
             ##### GitHub info
-            echo "\\nGitHub repo information"
+            echo -e "\nGitHub repo information"
             
             # Extract the repo name from the GitHub link
             gh_repo_name=$(echo $gh_link | awk -F/ '{print $NF}')
@@ -136,16 +136,10 @@ jobs:
         run: |
           python3 build_packages_page.py
           mv table.html gh-pages/index.html
-
-      # Keep the generated CSV file as an artifact for development purposes
-      - name: upload artifact
-        uses: actions/upload-artifact@v4
-        with:
-          path: packages.csv
       
       - name: Upload static files as artifact
         id: deployment
-        uses: actions/upload-pages-artifact@v3 # or specific "vX.X.X" version tag for this action
+        uses: actions/upload-pages-artifact@v3 
         with:
           path: gh-pages
 
