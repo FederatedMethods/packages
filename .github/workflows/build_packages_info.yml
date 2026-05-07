@@ -130,6 +130,8 @@ jobs:
 
           mkdir gh-pages
           cp output.csv gh-pages/
+
+          cat output.csv
           
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
