@@ -79,7 +79,7 @@ jobs:
             gh_owner=$(cat gh_repo_info.json | jq '.owner.login')
             echo "GitHub owner: $gh_owner"
 
-            gh_code_of_conduct=$(cat gh_repo_info.json | jq '.codeOfConduct')
+            gh_code_of_conduct=$(cat gh_repo_info.json | jq '.codeOfConduct.name')
             echo "GitHub code of conduct: $gh_code_of_conduct"
 
             # Tidy up
