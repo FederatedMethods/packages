@@ -36,7 +36,6 @@ def main(csv_file_path, html_file_path):
                 html_file.write('<td>' + row[7] + '</td>') # GH version
                 html_file.write('<td>' + row[8] + '</td>') # GH license
                 html_file.write('<td>' + row[9] + '</td>') # GH owner
-                html_file.write('<td>' + row[10] + '</td>') # GH code of conduct
                 html_file.write('</tr>\n')
 
             html_file.write('</table>')
