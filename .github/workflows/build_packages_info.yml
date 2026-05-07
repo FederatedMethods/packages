@@ -27,7 +27,7 @@ jobs:
           ls $GITHUB_WORKSPACE
 
           # Create new output file
-          echo "Name,Description,CRAN link,CRAN version, CRAN license,GitHub link,Last commit,GitHub version,GitHub license" > output.csv
+          echo "Name,Description,CRAN link,CRAN version, CRAN license,GitHub link,Last commit,GitHub version,GitHub license,Github owner" > output.csv
           
           while IFS="," read -r name description gh_link cran_link
           do
@@ -39,7 +39,7 @@ jobs:
             echo ""
 
             ##### GitHub info
-            echo "GitHub repo information"
+            echo "\nGitHub repo information"
             
             # Extract the repo name from the GitHub link
             gh_repo_name=$(echo $gh_link | awk -F/ '{print $NF}')
@@ -63,7 +63,7 @@ jobs:
             echo "last GitHub release: $gh_last_release"
 
             # Use the GitHub API to pull in info about the repoisitory
-            echo "GitHub API information"
+            echo "\nGitHub API information"
             gh repo view --json codeOfConduct,description,homepageUrl,licenseInfo,owner,parent,updatedAt > gh_repo_info.json
             echo "API response:"
             cat gh_repo_info.json
@@ -75,6 +75,9 @@ jobs:
             fi
 
             echo "GitHub license: $gh_license"
+
+            gh_owner=$(cat gh_repo_info.json | jq '.owner.login')
+            echo "GitHub owner: $gh_owner"
 
             # Tidy up
             cd ..
@@ -116,12 +119,14 @@ jobs:
             echo "CRAN license: $cran_license"
 
             # write to file
-            echo "$name,$description,$cran_link,$cran_version,$cran_license,$gh_link,$gh_last_commit,$gh_last_release,$gh_license" >> output.csv
+            echo "$name,$description,$cran_link,$cran_version,$cran_license,$gh_link,$gh_last_commit,$gh_last_release,$gh_license,$gh_owner" >> output.csv
 
             echo "-----------------------------------"            
 
           done < <(tail -n +2 packages.csv)
 
+          mkdir gh-pages
+          mv output.csv gh-pages/
           
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -130,7 +135,6 @@ jobs:
       - name: build html page
         run: |
           python3 build_packages_page.py
-          mkdir gh-pages
           mv table.html gh-pages/index.html
 
       # Keep the generated CSV file as an artifact for development purposes
