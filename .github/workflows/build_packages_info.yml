@@ -39,7 +39,7 @@ jobs:
             echo ""
 
             ##### GitHub info
-            echo "\nGitHub repo information"
+            echo "\\nGitHub repo information"
             
             # Extract the repo name from the GitHub link
             gh_repo_name=$(echo $gh_link | awk -F/ '{print $NF}')
@@ -126,7 +126,7 @@ jobs:
           done < <(tail -n +2 packages.csv)
 
           mkdir gh-pages
-          mv output.csv gh-pages/
+          cp output.csv gh-pages/
           
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
