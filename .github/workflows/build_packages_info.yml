@@ -59,10 +59,15 @@ jobs:
             
             echo "last GitHub release: $gh_last_release"
 
+            # Use the GitHub API to pull in info about the repoisitory
             gh repo view --json codeOfConduct,description,homepageUrl,licenseInfo,owner,parent,updatedAt > gh_repo_info.json
             cat gh_repo_info.json
 
+            # Get the license as it appears in GitHub
             gh_license=$(cat gh_repo_info.json | jq '.licenseInfo.nickname')
+            if [ -z "gh_license" ]; then
+              gh_license=$(cat gh_repo_info.json | jq '.licenseInfo.name')
+            fi
 
             # Tidy up
             cd ..
