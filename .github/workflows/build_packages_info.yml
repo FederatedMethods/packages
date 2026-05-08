@@ -75,7 +75,7 @@ jobs:
             fi
 
             # If the license is "Other", check for a LICENSE.md file and see if it contains actual license
-            if [ "${gh_license}" = "Other" ]; then
+            if [ "${gh_license}" = '"Other"' ]; then
               if [ -f "LICENSE.md" ]; then
                 echo "License file found: LICENSE.md"
                 if $(grep -q "MIT License" LICENSE.md); then
