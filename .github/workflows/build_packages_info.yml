@@ -74,6 +74,16 @@ jobs:
               gh_license=$(cat gh_repo_info.json | jq '.licenseInfo.name')
             fi
 
+            # If the license is "Other", check for a LICENSE.md file and see if it contains actual license
+            if [ "${gh_license}" = "Other" ]; then
+              if [ -f "LICENSE.md" ]; then
+                echo "License file found: LICENSE.md"
+                if $(grep -q "MIT License" LICENSE.md); then
+                  gh_license="MIT License"
+                fi
+              fi
+            fi
+
             echo "GitHub license: $gh_license"
 
             gh_owner=$(cat gh_repo_info.json | jq '.owner.login')
