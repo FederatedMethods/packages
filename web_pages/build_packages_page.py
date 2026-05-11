@@ -36,7 +36,11 @@ def main(csv_file_path, html_file_path):
                 row_count += 1
                 html_file.write('<tr>')
                 html_file.write('<td>' + str(row_count) + '</td>') # Row number
-                html_file.write('<td>' + row[0] + '</td>') # Name
+                #html_file.write('<td>' + row[0] + '</td>') # Name
+                if len(row[5]) > 0:
+                    html_file.write('<td><a href="' + row[5] + '" target="blank">' + row[0] + '</a></td>') # GH repository link with name
+                else:
+                    html_file.write('<td>' + row[0] + '</td>')
                 html_file.write('<td>' + row[1] + '</td>') # Description
                 if len(row[2]) > 0:
                     html_file.write('<td><a href="' + row[2] + '" target="blank">Link</a></td>') # CRAN link
@@ -44,10 +48,7 @@ def main(csv_file_path, html_file_path):
                     html_file.write('<td></td>')
                 html_file.write('<td>' + row[3] + '</td>') # CRAN version
                 html_file.write('<td>' + row[4] + '</td>') # CRAN license
-                if len(row[5]) > 0:
-                    html_file.write('<td><a href="' + row[5] + '" target="blank">Link</a></td>') # GH repository
-                else:
-                    html_file.write('<td></td>')
+               
                 html_file.write('<td>' + row[6] + '</td>') # GH last update
                 html_file.write('<td>' + row[7] + '</td>') # GH version
                 html_file.write('<td>' + row[8] + '</td>') # GH license

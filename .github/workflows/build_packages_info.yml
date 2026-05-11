@@ -150,7 +150,7 @@ jobs:
       - name: build html page
         run: |
           python3 build_packages_page.py
-          mv table.html gh-pages/index.html
+          mv output/* gh-pages/
       
       - name: Upload static files as artifact
         id: deployment
