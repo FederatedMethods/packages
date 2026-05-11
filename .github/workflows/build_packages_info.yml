@@ -136,7 +136,7 @@ jobs:
 
             echo "-----------------------------------"            
 
-          done < <(tail -n +2 packages.csv)
+          done < <(tail -n +2 package_list.csv)
 
           mkdir gh-pages
           cp output.csv gh-pages/
