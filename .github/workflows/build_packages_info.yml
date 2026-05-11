@@ -149,7 +149,7 @@ jobs:
       # Parse the output CSV file and generate an HTML page
       - name: build html page
         run: |
-          python3 web_packages/build_packages_page.py
+          python3 web_pages/build_packages_page.py
           mv output/* gh-pages/
       
       - name: Upload static files as artifact
