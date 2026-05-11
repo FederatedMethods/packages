@@ -62,5 +62,5 @@ def main(csv_file_path, html_file_path):
         html_file.write('</body>\n</html>')
 
 if __name__ == '__main__':
-    main('output.csv', './output/table.html')
+    main('output.csv', './output/index.html')
     shutil.copy('./web_pages/template/style_main.css', './output/style_main.css')
