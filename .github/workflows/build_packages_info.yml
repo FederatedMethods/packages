@@ -29,7 +29,7 @@ jobs:
           # Create new output file
           echo "Name,Description,CRAN link,CRAN version, CRAN license,Last commit,GitHub version,GitHub license,Github owner,Status" > output.csv
           
-          while IFS="," read -r name description gh_link cran_link
+          while IFS="," read -r name description gh_link cran_link status
           do
             echo "-----------------------------------"
             echo "name: $name"
