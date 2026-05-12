@@ -1,6 +1,6 @@
-name, description, github_link, cran_link
-dsBase, The dsBase package, https://github.com/datashield/dsbase, https://cran.r-project.org/package=dsBase
-dsBaseClient, The dsBaseClient package, https://github.com/datashield/dsbaseclient, https://cran.r-project.org/package=dsBaseClient
+name, description, github_link, cran_link, status
+dsBase, The dsBase package, https://github.com/datashield/dsbase, https://cran.r-project.org/package=dsBase, production
+dsBaseClient, The dsBaseClient package, https://github.com/datashield/dsbaseclient, https://cran.r-project.org/package=dsBaseClient, production
 dsBayesPathAnalysis, Bayes Path Analysis package, https://github.com/StuartWheater/dsBayesPathAnalysis,
 dsBayesPathAnalysisClient, Bayes Path Analysis package, https://github.com/StuartWheater/dsBayesPathAnalysisClient,
 dsBinVal, ROC-GLM and Calibrationcurve package, https://github.com/difuture-lmu/dsBinVal,
@@ -12,32 +12,32 @@ dsClusterAnalysisClient, Cluster analysis package, https://github.com/FlorianSch
 dsCoda, Coda package, https://github.com/datashield/dsCoda,
 dsCodaClient, Coda package, https://github.com/datashield/dsCodaClient,
 dsCWB, Component-wise boosting package, https://github.com/schalkdaniel/dsCWB,
-dsDanger, Danger package, https://github.com/datashield/dsDanger,
-dsDangerClient, Danger package, https://github.com/datashield/dsDangerClient,
+dsDanger, Danger package, https://github.com/datashield/dsDanger,, production
+dsDangerClient, Danger package, https://github.com/datashield/dsDangerClient,, production
 dsDashboard, Dashboard package, https://github.com/bips-hb/dsDashboard,
 dsDid, Difference-in-Differences package,  https://github.com/manuhuth/dsDid,
 dsDidClient, Difference-in-Differences package,  https://github.com/manuhuth/dsDidClient,
-dsExposome, Exposome package, https://github.com/isglobal-brge/dsExposome,
-dsExposomeClient, Exposome package, https://github.com/isglobal-brge/dsExposomeClient,
-dsFlower, flower.ai federated learning package, https://github.com/isglobal-brge/dsFlower,
-dsFlowerClient, flower.ai federated learning package, https://github.com/isglobal-brge/dsFlowerClient,
-dsGeo, Geo package, https://github.com/datashield/dsGeo,
-dsGeoClient, Geo package, https://github.com/datashield/dsGeoClient,
+dsExposome, Exposome package, https://github.com/isglobal-brge/dsExposome,, production
+dsExposomeClient, Exposome package, https://github.com/isglobal-brge/dsExposomeClient,, production
+dsFlower, flower.ai federated learning package, https://github.com/isglobal-brge/dsFlower,, development
+dsFlowerClient, flower.ai federated learning package, https://github.com/isglobal-brge/dsFlowerClient,, development
+dsGeo, Geo package, https://github.com/datashield/dsGeo,, retired
+dsGeoClient, Geo package, https://github.com/datashield/dsGeoClient,, retired
 ds-helper, Data manipulation helper package, https://github.com/timcadman/ds-helper,
-dsImaging, Clinical imaging package, https://github.com/isglobal-brge/dsImaging,
-dsImagingClient, Clinical imaging package, https://github.com/isglobal-brge/dsImagingClient,
-dsJobs, Submit and manage HPC jobs, https://github.com/isglobal-brge/dsJobs,
-dsJobsClient, Submit and manage HPC jobs, https://github.com/isglobal-brge/dsJobsClient,
-dsMediation, Mediation analysis package, https://github.com/datashield/dsMediation,
-dsMediationClient, Mediation analysis package, https://github.com/datashield/dsMediationClient,
+dsImaging, Clinical imaging package, https://github.com/isglobal-brge/dsImaging,, development
+dsImagingClient, Clinical imaging package, https://github.com/isglobal-brge/dsImagingClient,, development
+dsJobs, Submit and manage HPC jobs, https://github.com/isglobal-brge/dsJobs,, development
+dsJobsClient, Submit and manage HPC jobs, https://github.com/isglobal-brge/dsJobsClient, development
+dsMediation, Mediation analysis package, https://github.com/datashield/dsMediation,, production
+dsMediationClient, Mediation analysis package, https://github.com/datashield/dsMediationClient,, production
 dsMicrobiome, Microbiome package, https://github.com/StuartWheater/dsMicrobiome,
 dsMicrobiomeClient, Microbiome package, https://github.com/StuartWheater/dsMicrobiomeClient,
-dsML, Machine learning package, https://github.com/isglobal-brge/dsML,
-dsMLClient, Machine learning package, https://github.com/isglobal-brge/dsMLClient,
-dsMTLBase, Multitask learning package, https://github.com/transbioZI/dsMTLBase,
-dsMTLClient, Multitask learning package, https://github.com/transbioZI/dsMTLClient,
-dsOmics, Omics package, https://github.com/isglobal-brge/dsOmics,
-dsOmicsClient, Omics package, https://github.com/isglobal-brge/dsOmicsClient,
+dsML, Machine learning package, https://github.com/isglobal-brge/dsML,, production
+dsMLClient, Machine learning package, https://github.com/isglobal-brge/dsMLClient,, production
+dsMTLBase, Multitask learning package, https://github.com/transbioZI/dsMTLBase,, production
+dsMTLClient, Multitask learning package, https://github.com/transbioZI/dsMTLClient,, production
+dsOmics, Omics package, https://github.com/isglobal-brge/dsOmics,, production
+dsOmicsClient, Omics package, https://github.com/isglobal-brge/dsOmicsClient,, production
 dsOMOP, OMOP integration package, https://github.com/isglobal-brge/dsOMOP,
 dsOMOPClient, OMOP integration package, https://github.com/isglobal-brge/dsOMOPClient,
 dsOMOPHelper, OMOP integration helper package, https://github.com/isglobal-brge/dsOMOPHelper,
@@ -47,17 +47,17 @@ dsPrivacyClient, Differential privacy package, https://github.com/arkhn-oss/dsPr
 dsPUcopula, PU copula based synthetic data generator, https://github.com/bips-hb/dsPUcopula,
 dsPUcopulaClient, PU copula based synthetic data generator, https://github.com/bips-hb/dsPUcopulaClient,
 dsQueryLibrary, OHDSI query library implementation package, https://github.com/sib-swiss/dsQueryLibrary,
-dsRadiomics, Radiomics feature extraction and segmentation package, https://github.com/isglobal-brge/dsRadiomics,
-dsRadiomicsClient, Radiomics feature extraction and segmentation package, https://github.com/isglobal-brge/dsRadiomicsClient,
+dsRadiomics, Radiomics feature extraction and segmentation package, https://github.com/isglobal-brge/dsRadiomics,, development
+dsRadiomicsClient, Radiomics feature extraction and segmentation package, https://github.com/isglobal-brge/dsRadiomicsClient,, development
 dsROCrate, RO-Crate interface, https://github.com/FederatedMethods/dsROCrate, https://cran.r-project.org/package=dsROCrate
-dsSurvival, Survival analysis package, https://github.com/neelsoumya/dsSurvival,
-dsSurvivalClient, Survival analysis package, https://github.com/neelsoumya/dsSurvivalClient,
-dsSurvival, Survival analysis package, https://github.com/datashield/dsSurvival,
-dsSurvivalClient, Survival analysis package, https://github.com/datashield/dsSurvivalClient,
-dsSwissKnife, , https://github.com/sib-swiss/dsSwissKnife,
-dsSwissKnifeClient, , https://github.com/sib-swiss/dsSwissKnifeClient,
+dsSurvival, Survival analysis package, https://github.com/neelsoumya/dsSurvival,, retired
+dsSurvivalClient, Survival analysis package, https://github.com/neelsoumya/dsSurvivalClient,, retired
+dsSurvival, Survival analysis package, https://github.com/datashield/dsSurvival,, production
+dsSurvivalClient, Survival analysis package, https://github.com/datashield/dsSurvivalClient,, production
+dsSwissKnife, , https://github.com/sib-swiss/dsSwissKnife,, production
+dsSwissKnifeClient, , https://github.com/sib-swiss/dsSwissKnifeClient,, producion
 dsSynthetic, Synthetic data generation package,  https://github.com/tombisho/dsSynthetic,
 dsSyntheticClient, Synthetic data generation package,  https://github.com/tombisho/dsSyntheticClient,
-dsTidyverse, The dsTidyverse package, https://github.com/molgenis/ds-tidyverse, https://cran.r-project.org/package=dsTidyverse
-dsTidyverseClient, The dsTidyverseClient package, https://github.com/molgenis/ds-tidyverse-client, https://cran.r-project.org/package=dsTidyverseClient
+dsTidyverse, The dsTidyverse package, https://github.com/molgenis/ds-tidyverse, https://cran.r-project.org/package=dsTidyverse, production
+dsTidyverseClient, The dsTidyverseClient package, https://github.com/molgenis/ds-tidyverse-client, https://cran.r-project.org/package=dsTidyverseClient, production
 dsUpload, Data uploading tool, https://github.com/lifecycle-project/ds-upload,
