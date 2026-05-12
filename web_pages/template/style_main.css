@@ -71,17 +71,12 @@ table td {
   font-size:15px;
 }
 
+table td.left {
+  text-align:left;
+}
+
 table tr:nth-child(even){
   background:#f2f2f2;
-}
-
-table a {
-  color:#c9002f;
-}
-
-
-span.help_text {
-  color: #666;
 }
 
 
@@ -343,74 +338,3 @@ hr {
   background-color:#dedcd2;
 }
 
-/* #BREADCRUMBS */
-#breadcrumbs {
-  margin: 0 0 0 21%;
-  font-size:.875em;
-  color:#666;
-  padding: 0.25em 0 0.5em 0;
-}
-
-#breadcrumbs a, #breadcrumbs a:visited {
-  color:#666!important;
-  text-decoration:none;
-}
-
-#breadcrumbs a:hover, #breadcrumbs a:focus  {
-  text-decoration:underline;
-  outline: none;
-}
-
-
-/* #LEFT COL HOLDING SIDENAV */
-#col1 {
-  float:left;
-  font-size:.875em;
-  padding:6.6em 0 0 0; /* moving it down */
-  margin-bottom: 1.5em;
-  width:18.434%;
-}
-
-.navgroup {
-  margin:0;
-  padding:0;
-  list-style-type:none;
-  background:none;
-  border-top:1px solid #dedcd2;
-}
-
-
-.navgroup li {
-  list-style-type:none;
-  list-style-image:none;
-  border-bottom:1px solid #dedcd2;
-  border-top:0;
-  padding:0;
-  margin:0;
-  background-color:#efede9;
-  line-height:1.5;
-}
-
-.navgroup li a {
-  display: block;
-  margin:0;
-  padding:.5em 5%;
-  width: 90%;
-  color:#333;
-  text-decoration:none;
-}
-
-.navgroup li a:visited {
-  color:#333;
-}
-
-.navgroup li a:hover, .navgroup li a:focus {
-  background-color:#fff;
-  color:#333;
-  outline: none;
-  transition: all 0.15s linear;
-}
-
-.nav-users a {
-  color: #fff;
-}
