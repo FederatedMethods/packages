@@ -63,9 +63,12 @@ jobs:
             
             echo "last GitHub release: $gh_last_release"
 
-            gh_functions=$(grep -oP '^export\((.*)\)$' NAMESPACE)
-            echo $name >> functions.txt
-            echo "$gh_functions" >> functions.txt
+            if [ -f "NAMESPACE" ]; then
+              echo "NAMESPACE file found"
+              gh_functions=$(grep -oP '^export\((.*)\)$' NAMESPACE)
+              echo "GitHub functions: $gh_functions"
+              echo $name >> functions.txt
+              echo "$gh_functions" >> functions.txt
 
             # Use the GitHub API to pull in info about the repoisitory
             echo "\nGitHub API information"
