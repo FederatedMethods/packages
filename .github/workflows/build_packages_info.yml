@@ -65,10 +65,12 @@ jobs:
 
             if [ -f "NAMESPACE" ]; then
               echo "NAMESPACE file found"
-              gh_functions=$(grep -oP '^export\((.*)\)$' NAMESPACE)
+              gh_functions=$(sed -n "s/^export(\(.*\))$/\1/p" NAMESPACE | tr '\n' ',')
               echo "GitHub functions: $gh_functions"
               echo $name >> functions.txt
-              echo "$gh_functions" >> functions.txt
+              if [ -z "${gh_functions}" ]; then
+                echo "$gh_functions" >> functions.txt
+              fi
             fi
 
             # Use the GitHub API to pull in info about the repoisitory
