@@ -63,6 +63,10 @@ jobs:
             
             echo "last GitHub release: $gh_last_release"
 
+            gh_functions=$(grep -oP '^export\((.*)\)$' NAMESPACE)
+            echo $name >> functions.txt
+            echo "$gh_functions" >> functions.txt
+
             # Use the GitHub API to pull in info about the repoisitory
             echo "\nGitHub API information"
             gh repo view --json codeOfConduct,description,homepageUrl,licenseInfo,owner,parent,updatedAt > gh_repo_info.json
@@ -143,6 +147,8 @@ jobs:
           cp output.csv gh-pages/
 
           cat output.csv
+
+          cat functions.txt
           
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
