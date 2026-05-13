@@ -69,6 +69,7 @@ jobs:
               echo "GitHub functions: $gh_functions"
               echo $name >> functions.txt
               echo "$gh_functions" >> functions.txt
+            fi
 
             # Use the GitHub API to pull in info about the repoisitory
             echo "\nGitHub API information"
