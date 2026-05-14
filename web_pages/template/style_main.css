@@ -1,7 +1,7 @@
 html, body {
   margin:0;
-  padding:0;
-  width:100%;
+  padding:0 5px 0 5px;
+  width:100% - 10px;
   height:100%;
   font-family:Arial, Helvetica, Verdana, sans-serif;
   line-height:1.5;

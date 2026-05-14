@@ -9,12 +9,12 @@ dsBoltzmannMachinesClient, Deep Boltzmann machines package, https://github.com/s
 dsCalibration, Calibration assessment package, https://github.com/difuture-lmu/dsCalibration,,
 dsClusterAnalysis, Cluster analysis package, https://github.com/FlorianSchw/dsClusterAnalysis,,
 dsClusterAnalysisClient, Cluster analysis package, https://github.com/FlorianSchw/dsClusterAnalysisClient,,
-dsCoda, Coda package, https://github.com/datashield/dsCoda,,
-dsCodaClient, Coda package, https://github.com/datashield/dsCodaClient,,
+dsCoda, Coda package, https://github.com/datashield/dsCoda,,development
+dsCodaClient, Coda package, https://github.com/datashield/dsCodaClient,,development
 dsCWB, Component-wise boosting package, https://github.com/schalkdaniel/dsCWB,,
 dsDanger, Danger package, https://github.com/datashield/dsDanger,, production
 dsDangerClient, Danger package, https://github.com/datashield/dsDangerClient,, production
-dsDashboard, Dashboard package, https://github.com/bips-hb/dsDashboard,,
+dsDashboard, Dashboard package, https://github.com/bips-hb/dsDashboard,,development
 dsDid, Difference-in-Differences package,  https://github.com/manuhuth/dsDid,,
 dsDidClient, Difference-in-Differences package,  https://github.com/manuhuth/dsDidClient,,
 dsExposome, Exposome package, https://github.com/isglobal-brge/dsExposome,, production
@@ -23,7 +23,7 @@ dsFlower, flower.ai federated learning package, https://github.com/isglobal-brge
 dsFlowerClient, flower.ai federated learning package, https://github.com/isglobal-brge/dsFlowerClient,, development
 dsGeo, Geo package, https://github.com/datashield/dsGeo,, retired
 dsGeoClient, Geo package, https://github.com/datashield/dsGeoClient,, retired
-ds-helper, Data manipulation helper package, https://github.com/timcadman/ds-helper,
+ds-helper, Data manipulation helper package, https://github.com/timcadman/ds-helper,,
 dsImaging, Clinical imaging package, https://github.com/isglobal-brge/dsImaging,, development
 dsImagingClient, Clinical imaging package, https://github.com/isglobal-brge/dsImagingClient,, development
 dsJobs, Submit and manage HPC jobs, https://github.com/isglobal-brge/dsJobs,, development
@@ -38,14 +38,14 @@ dsMTLBase, Multitask learning package, https://github.com/transbioZI/dsMTLBase,,
 dsMTLClient, Multitask learning package, https://github.com/transbioZI/dsMTLClient,, production
 dsOmics, Omics package, https://github.com/isglobal-brge/dsOmics,, production
 dsOmicsClient, Omics package, https://github.com/isglobal-brge/dsOmicsClient,, production
-dsOMOP, OMOP integration package, https://github.com/isglobal-brge/dsOMOP,,
-dsOMOPClient, OMOP integration package, https://github.com/isglobal-brge/dsOMOPClient,,
-dsOMOPHelper, OMOP integration helper package, https://github.com/isglobal-brge/dsOMOPHelper,,
+dsOMOP, OMOP integration package, https://github.com/isglobal-brge/dsOMOP,, production
+dsOMOPClient, OMOP integration package, https://github.com/isglobal-brge/dsOMOPClient,, production
+dsOMOPHelper, OMOP integration helper package, https://github.com/isglobal-brge/dsOMOPHelper,, production
 dsPredictBase, Push R objects to servers, https://github.com/difuture-lmu/dsPredictBase,,
 dsPrivacy, Differential privacy package, https://github.com/arkhn-oss/dsPrivacy,,
 dsPrivacyClient, Differential privacy package, https://github.com/arkhn-oss/dsPrivacyClient,,
-dsPUcopula, PU copula based synthetic data generator, https://github.com/bips-hb/dsPUcopula,,
-dsPUcopulaClient, PU copula based synthetic data generator, https://github.com/bips-hb/dsPUcopulaClient,,
+dsPUcopula, PU copula based synthetic data generator, https://github.com/bips-hb/dsPUcopula,, development
+dsPUcopulaClient, PU copula based synthetic data generator, https://github.com/bips-hb/dsPUcopulaClient,, development
 dsQueryLibrary, OHDSI query library implementation package, https://github.com/sib-swiss/dsQueryLibrary,,
 dsRadiomics, Radiomics feature extraction and segmentation package, https://github.com/isglobal-brge/dsRadiomics,, development
 dsRadiomicsClient, Radiomics feature extraction and segmentation package, https://github.com/isglobal-brge/dsRadiomicsClient,, development

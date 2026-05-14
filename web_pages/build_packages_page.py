@@ -22,11 +22,16 @@ def main(csv_file_path, html_file_path):
 
         html_file.write(head)
 
+        top_content = '<div class="top-content">'
+        top_content += '<h1>DataSHIELD packages</h1>'
+        top_content += '<p>This page lists all the packages that are used in the DataSHIELD ecosystem. It includes packages that are in production, in development, retired, and unknown status.</p>'
+
+        html_file.write(top_content)
+
         with open(csv_file_path, 'r') as csv_file:
             reader = csv.reader(csv_file)
             headers = next(reader)
 
-            html_file.write('<h1>DataSHIELD packages</h1>\n')
             html_file.write('<table border="1">\n')
 
             html_file.write('<tr><td></td>')
@@ -45,62 +50,65 @@ def main(csv_file_path, html_file_path):
             retired_rows = ""
             unknown_rows = ""
 
-            row_count = 0
+            # Counts for each rows
+            production_rows_count = 1
+            development_rows_count = 1
+            retired_rows_count = 1
+            unknown_rows_count = 1
+
             for row in reader:
                 print(row)
-                row_count += 1
-
-                this_row = '<tr>'
-                #html_file.write('<tr>')
-                #html_file.write('<td>' + str(row_count) + '</td>') # Row number
-                this_row += '<td>' + str(row_count) + '</td>' # Row number
-
+                this_row = ""
+                
                 # Add GitHub link if available, otherwise just the name
                 if len(row[5]) > 0:
-                    #html_file.write('<td class="left"><a href="' + row[5] + '" target="blank">' + row[0] + '</a></td>') # GH repository link with name
                     this_row += '<td class="left"><a href="' + row[5] + '" target="blank">' + row[0] + '</a></td>' # GH repository link with name
                 else:
-                    #html_file.write('<td class="left">' + row[0] + '</td>')
                     this_row += '<td class="left">' + row[0] + '</td>'
 
                 # Description
                 if len(row[1]) > 0:
-                    #html_file.write('<td class="left">' + row[1] + '</td>') # Description
-                    this_row += '<td class="left">' + row[1] + '</td>' # Description
+                    this_row += '<td class="left">' + row[1] + '</td>'
                 else:
-                    #html_file.write('<td></td>')
                     this_row += '<td></td>'
-
+                
+                # CRAN version with link
                 if len(row[2]) > 0:
-                    #html_file.write('<td><a href="' + row[2] + '" target="blank">' + row[3] + '</a></td>') # CRAN link
-                    this_row += '<td><a href="' + row[2] + '" target="blank">' + row[3] + '</a></td>' # CRAN link
+                    this_row += '<td><a href="' + row[2] + '" target="blank">' + row[3] + '</a></td>' 
                 else:
-                    #html_file.write('<td></td>')
                     this_row += '<td></td>'
 
+                this_row += '<td>' + row[4] + '</td>' # CRAN license
+                this_row += '<td>' + row[6] + '</td>' # GH last update
+                this_row += '<td>' + row[7] + '</td>' # GH version
+                this_row += '<td>' + row[8] + '</td>' # GH license
+                this_row += '<td class="left">' + row[9] + '</td>' # GH owner
 
-                # html_file.write('<td>' + row[3] + '</td>') # CRAN version
-                #html_file.write('<td>' + row[4] + '</td>') # CRAN license
-                this_row += '<td>' + row[4] + '</td>'
-                #html_file.write('<td>' + row[6] + '</td>') # GH last update
-                this_row += '<td>' + row[6] + '</td>'
-                #html_file.write('<td>' + row[7] + '</td>') # GH version
-                this_row += '<td>' + row[7] + '</td>'
-                #html_file.write('<td>' + row[8] + '</td>') # GH license
-                this_row += '<td>' + row[8] + '</td>'
-                #html_file.write('<td class="left">' + row[9] + '</td>') # GH owner
-                this_row += '<td class="left">' + row[9] + '</td>'
-                #html_file.write('</tr>\n')
-                this_row += '</tr>\n'
-
+                # Group rows by status and add put a row number in
                 if row[10].strip() == 'production':
+                    production_rows += '<tr>'
+                    production_rows += '<td>' + str(production_rows_count) + '</td>' # Row number
                     production_rows += this_row
+                    production_rows += '</tr>'
+                    production_rows_count += 1
                 elif row[10].strip() == 'development':
+                    development_rows += '<tr>'
+                    development_rows += '<td>' + str(development_rows_count) + '</td>'
                     development_rows += this_row
+                    development_rows += '</tr>'
+                    development_rows_count += 1
                 elif row[10].strip() == 'retired':
+                    retired_rows += '<tr>'
+                    retired_rows += '<td>' + str(retired_rows_count) + '</td>'
                     retired_rows += this_row
+                    retired_rows += '</tr>'
+                    retired_rows_count += 1
                 else:
+                    unknown_rows += '<tr>'
+                    unknown_rows += '<td>' + str(unknown_rows_count) + '</td>'
                     unknown_rows += this_row
+                    unknown_rows += '</tr>'
+                    unknown_rows_count += 1
 
             # Build the table with the rows grouped by status
             html_file.write('<tr><td colspan="9">Production</td></tr>')
@@ -114,6 +122,7 @@ def main(csv_file_path, html_file_path):
             html_file.write('</table>')
 
         html_file.write('Generated on ' + datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+        html_file.write('&nbsp;&nbsp;Made by the <a href="https://github.com/FederatedMethods">Federated Methods team</a>')
 
         html_file.write('</body>\n</html>')
 
