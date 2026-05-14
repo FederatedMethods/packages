@@ -47,8 +47,6 @@ dsPrivacyClient, Differential privacy package, https://github.com/arkhn-oss/dsPr
 dsPUcopula, PU copula based synthetic data generator, https://github.com/bips-hb/dsPUcopula,, development
 dsPUcopulaClient, PU copula based synthetic data generator, https://github.com/bips-hb/dsPUcopulaClient,, development
 dsQueryLibrary, OHDSI query library implementation package, https://github.com/sib-swiss/dsQueryLibrary,,
-dsRadiomics, Radiomics feature extraction and segmentation package, https://github.com/isglobal-brge/dsRadiomics,, development
-dsRadiomicsClient, Radiomics feature extraction and segmentation package, https://github.com/isglobal-brge/dsRadiomicsClient,, development
 dsROCrate, RO-Crate interface, https://github.com/FederatedMethods/dsROCrate, https://cran.r-project.org/package=dsROCrate,development
 dsSurvival, Survival analysis package, https://github.com/neelsoumya/dsSurvival,, retired
 dsSurvivalClient, Survival analysis package, https://github.com/neelsoumya/dsSurvivalClient,, retired
