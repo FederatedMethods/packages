@@ -1,6 +1,6 @@
 # Start with a list of packages in packages.csv, and get external data about them (e.g. last commit date) to generate an HTML page with the package information. This workflow is triggered manually from the Actions tab.
 # Olly Butters
-# 1/5/26
+# 15/5/26
 name: Package list
 
 # Controls when the workflow will run
@@ -29,6 +29,7 @@ jobs:
           # Create new output file
           echo "Name,Description,CRAN link,CRAN version, CRAN license,Last commit,GitHub version,GitHub license,Github owner,Status" > output.csv
           
+          # Read the data in from package_list.csv. The name and gh_link fields are required. 
           while IFS="," read -r name description gh_link cran_link status
           do
             echo "-----------------------------------"
@@ -46,67 +47,80 @@ jobs:
             gh_repo_name=$(echo $gh_link | awk -F/ '{print $NF}')
             echo $gh_repo_name
 
-            # clone the repo
-            git clone $gh_link
-            cd $gh_repo_name
-
-            # Last commit date of repo
-            gh_last_commit=$(git log -1 --format=%cs)
-            echo "last commit: $gh_last_commit"
-
-            # Last release
-            if [ $(git rev-list --tags --max-count=1) ]; then
-              gh_last_release=$(git describe --tags $(git rev-list --tags --max-count=1))
-            else
+            # clone the GitHub repo and process it
+            if [ -z "${gh_link}" ]; then
+              echo "No GitHub link provided, skipping GitHub info for this package."
+              gh_last_commit=""
               gh_last_release=""
-            fi
-            
-            echo "last GitHub release: $gh_last_release"
+              gh_license=""
+              gh_functions=""
+              gh_owner=""
+              gh_code_of_conduct=""
+            else
+              echo "Cloning GitHub repo: $gh_link"
+              git clone $gh_link
+              cd $gh_repo_name
 
-            if [ -f "NAMESPACE" ]; then
-              echo "NAMESPACE file found"
-              gh_functions=$(sed -n "s/^export(\(.*\))$/\1/p" NAMESPACE | tr '\n' ',')
-              echo "GitHub functions: $gh_functions"
-              if [ -n "${gh_functions}" ]; then
-                echo "${name}: ${gh_functions}" >> ../functions.txt
+              # Last commit date of repo
+              gh_last_commit=$(git log -1 --format=%cs)
+              echo "last commit: $gh_last_commit"
+  
+              # Last release
+              if [ $(git rev-list --tags --max-count=1) ]; then
+                gh_last_release=$(git describe --tags $(git rev-list --tags --max-count=1))
               else
-                echo $name >> ../functions.txt
+                gh_last_release=""
               fi
-            fi
-
-            # Use the GitHub API to pull in info about the repoisitory
-            echo "\nGitHub API information"
-            gh repo view --json codeOfConduct,description,homepageUrl,licenseInfo,owner,parent,updatedAt > gh_repo_info.json
-            echo "API response:"
-            cat gh_repo_info.json
-
-            # Get the license as it appears in GitHub
-            gh_license=$(cat gh_repo_info.json | jq '.licenseInfo.nickname')
-            if [ -z "${gh_license}" ] || [ "${gh_license}" = '""' ]; then
-              gh_license=$(cat gh_repo_info.json | jq '.licenseInfo.name')
-            fi
-
-            # If the license is "Other", check for a LICENSE.md file and see if it contains actual license
-            if [ "${gh_license}" = '"Other"' ]; then
-              if [ -f "LICENSE.md" ]; then
-                echo "License file found: LICENSE.md"
-                if $(grep -q "MIT License" LICENSE.md); then
-                  gh_license="MIT License"
+              
+              echo "last GitHub release: $gh_last_release"
+  
+              # If there is a NAMES file then parse it to get the functino list and save the output
+              if [ -f "NAMESPACE" ]; then
+                echo "NAMESPACE file found"
+                gh_functions=$(sed -n "s/^export(\(.*\))$/\1/p" NAMESPACE | tr '\n' ',')
+                echo "GitHub functions: $gh_functions"
+                if [ -n "${gh_functions}" ]; then
+                  echo "${name}: ${gh_functions}" >> ../functions.txt
+                else
+                  echo $name >> ../functions.txt
                 fi
               fi
+  
+              # Use the GitHub API to pull in info about the repoisitory
+              echo "\nGitHub API information"
+              gh repo view --json codeOfConduct,description,homepageUrl,licenseInfo,owner,parent,updatedAt > gh_repo_info.json
+              echo "API response:"
+              cat gh_repo_info.json
+  
+              # Get the license as it appears in GitHub
+              gh_license=$(cat gh_repo_info.json | jq '.licenseInfo.nickname')
+              if [ -z "${gh_license}" ] || [ "${gh_license}" = '""' ]; then
+                gh_license=$(cat gh_repo_info.json | jq '.licenseInfo.name')
+              fi
+  
+              # If the license is "Other", check for a LICENSE.md file and see if it contains actual license
+              if [ "${gh_license}" = '"Other"' ]; then
+                if [ -f "LICENSE.md" ]; then
+                  echo "License file found: LICENSE.md"
+                  if $(grep -q "MIT License" LICENSE.md); then
+                    gh_license="MIT License"
+                  fi
+                fi
+              fi
+  
+              echo "GitHub license: $gh_license"
+  
+              gh_owner=$(cat gh_repo_info.json | jq '.owner.login')
+              echo "GitHub owner: $gh_owner"
+  
+              gh_code_of_conduct=$(cat gh_repo_info.json | jq '.codeOfConduct.name')
+              echo "GitHub code of conduct: $gh_code_of_conduct"
+  
+              # Tidy up
+              cd ..
+              rm -rf $gh_repo_name  
             fi
 
-            echo "GitHub license: $gh_license"
-
-            gh_owner=$(cat gh_repo_info.json | jq '.owner.login')
-            echo "GitHub owner: $gh_owner"
-
-            gh_code_of_conduct=$(cat gh_repo_info.json | jq '.codeOfConduct.name')
-            echo "GitHub code of conduct: $gh_code_of_conduct"
-
-            # Tidy up
-            cd ..
-            rm -rf $gh_repo_name
 
             ##### CRAN info
             echo "CRAN information"
@@ -118,11 +132,6 @@ jobs:
               # Get CRAN package name from cran_link
               CRAN_package_name=$(echo $cran_link | awk -F= '{print $NF}')
               echo "CRAN package name: $CRAN_package_name"
-
-              # Get the version number from CRAN
-              # This is overkill really, it takes ages to install all the R dependencies. Could just parse the CRAN DESCRIPTION file. 
-              #version=$(Rscript --vanilla -e 'print(subset(tools::CRAN_package_db(), Package == "dsBase")[["Version"]], row.names=FALSE)')
-              #echo "version: $version"
 
               cran_description_file_link="https://cran.r-project.org/web/packages/${CRAN_package_name}/DESCRIPTION"
               wget --content-on-error $cran_description_file_link
@@ -150,12 +159,13 @@ jobs:
 
           done < <(tail -n +2 package_list.csv)
 
+          # copy files to a new directory for deployment
           mkdir gh-pages
           cp output.csv gh-pages/
           cp functions.txt gh-pages/
 
+          # print the output files to the console for debugging
           cat output.csv
-
           cat functions.txt
           
         env:
