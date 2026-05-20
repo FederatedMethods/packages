@@ -127,4 +127,4 @@ def main(package_file_path, functions_file_path, html_file_path):
 
 if __name__ == '__main__':
     main('cache/output.csv', 'cache/functions.txt', './output/packages.html')
-    shutil.copy('./web_pages/template/style_main.css', './output/style_main.css')
+    shutil.copy('./build_web_pages/template/style_main.css', './output/style_main.css')
