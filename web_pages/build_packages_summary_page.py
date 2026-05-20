@@ -28,9 +28,9 @@ def main(csv_file_path, html_file_path):
 
         html_file.write(top_content)
 
-        with open(csv_file_path, 'r') as csv_file:
+        with open(csv_file_path, 'r', encoding='utf-8') as csv_file:
             reader = csv.reader(csv_file)
-            headers = next(reader)
+            next(reader)
 
             html_file.write('<table border="1">\n')
 
@@ -61,10 +61,7 @@ def main(csv_file_path, html_file_path):
                 this_row = ""
                 
                 # Add GitHub link if available, otherwise just the name
-                if len(row[5]) > 0:
-                    this_row += '<td class="left"><a href="' + row[5] + '" target="blank">' + row[0] + '</a></td>' # GH repository link with name
-                else:
-                    this_row += '<td class="left">' + row[0] + '</td>'
+                this_row += '<td class="left"><a href="packages.html#' + row[0] + '">' + row[0] + '</a></td>'
 
                 # Description
                 if len(row[1]) > 0:
@@ -127,5 +124,5 @@ def main(csv_file_path, html_file_path):
         html_file.write('</body>\n</html>')
 
 if __name__ == '__main__':
-    main('output.csv', './output/index.html')
+    main('./cache/output.csv', './output/index.html')
     shutil.copy('./web_pages/template/style_main.css', './output/style_main.css')

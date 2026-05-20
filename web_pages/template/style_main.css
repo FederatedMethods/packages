@@ -62,7 +62,6 @@ table th {
   font-size:12px;
   text-transform:uppercase;
   font-weight:bold;
-  max-width: 10em;
 }
 
 table td {
@@ -73,6 +72,12 @@ table td {
 
 table td.left {
   text-align:left;
+}
+
+table td.label {
+  font-weight:bold;
+  text-align: right;
+  width: 10em;
 }
 
 table tr:nth-child(even){
