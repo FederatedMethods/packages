@@ -171,8 +171,8 @@ jobs:
 
           # copy files to a new directory for deployment
           mkdir gh-pages
-          cp output.csv gh-pages/
-          cp functions.txt gh-pages/
+          cp output.csv cache/
+          cp functions.txt cache/
 
           # print the output files to the console for debugging
           cat output.csv
