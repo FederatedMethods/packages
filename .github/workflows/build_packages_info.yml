@@ -26,6 +26,9 @@ jobs:
           echo $GITHUB_WORKSPACE
           ls $GITHUB_WORKSPACE
 
+          # Make a cache directory for some info from the GitHub clones.
+          mkdir cache
+
           # Create new output file
           echo "Name,Description,CRAN link,CRAN version, CRAN license,Last commit,GitHub version,GitHub license,Github owner,Status" > output.csv
           
@@ -116,8 +119,15 @@ jobs:
               gh_code_of_conduct=$(cat gh_repo_info.json | jq '.codeOfConduct.name')
               echo "GitHub code of conduct: $gh_code_of_conduct"
   
-              # Tidy up
+              # Keep some files for processing later
               cd ..
+              mkdir cache/$gh_repo_name
+              cp $gh_repo_name/DESCRIPTION cache/$gh_repo_name/
+              cp $gh_repo_name/NAMESPACE cache/$gh_repo_name/ 2>/dev/null || true
+              cp $gh_repo_name/README.md cache/$gh_repo_name/ 2>/dev/null || true
+              cp $gh_repo_name/LICENSE* cache/$gh_repo_name/ 2>/dev/null || true
+
+              # tidy up
               rm -rf $gh_repo_name  
             fi
 
@@ -176,6 +186,7 @@ jobs:
         run: |
           python3 web_pages/build_packages_page.py
           mv output/* gh-pages/
+          mv cache/* gh-pages/
       
       - name: Upload static files as artifact
         id: deployment
