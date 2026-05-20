@@ -184,7 +184,8 @@ jobs:
       # Parse the output CSV file and generate an HTML page
       - name: build html page
         run: |
-          python3 web_pages/build_packages_page.py
+          python3 build_web_pages/build_packages_summary_page.py
+          python3 build_web_pages/build_packages_long_page.py
           mv output/* gh-pages/
           mv cache/* gh-pages/
       
