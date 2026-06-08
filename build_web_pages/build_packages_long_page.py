@@ -108,7 +108,7 @@ def main(package_file_path, functions_file_path, html_file_path):
                     <tr><td class="label">CRAN link</td><td class="left"><a href="{this_package_info.get('cran_link')}" target="_blank">{this_package_info.get('cran_link')}</a></td></tr>
                     """
                 else:
-                    html_content += '<tr><td class="label">CRAN link</td><td class="left">N/A</td></tr>'
+                    html_content += '<tr><td class="label">CRAN link</td><td class="left"></td></tr>'
                 
                 html_content += f"""
                     <tr><td class="label">CRAN version</td><td class="left">{this_package_info.get('cran_version', '-')}</td></tr>

@@ -30,7 +30,7 @@ jobs:
           mkdir cache
 
           # Create new output file
-          echo "Name,Description,CRAN link,CRAN version,CRAN license,GitHub link,Last commit,GitHub version,GitHub license,Github owner,Status" > output.csv
+          echo "Name,Description,CRAN link,CRAN version,CRAN license,GitHub link,Last commit,GitHub release name,GitHub release url,GitHub license,Github owner,Status" > output.csv
           
           # Read the data in from package_list.csv. The name and gh_link fields are required. 
           while IFS="," read -r name description gh_link cran_link status
@@ -105,6 +105,11 @@ jobs:
               fi
               echo "GitHub last release: $gh_last_release"
  
+              gh_last_release_url=$(cat gh_repo_info.json | jq '.latestRelease.url')
+              if [ -z "${gh_last_release_url}" ] || [ "${gh_last_release_url}" = '""' ]; then
+                gh_last_release_url=""
+              fi
+              echo "GitHub last release URL: $gh_last_release_url"
 
               # Get the license as it appears in GitHub
               gh_license=$(cat gh_repo_info.json | jq '.licenseInfo.nickname')
@@ -177,7 +182,7 @@ jobs:
             echo "CRAN license: $cran_license"
 
             # write to file
-            echo "$name,$description,$cran_link,$cran_version,$cran_license,$gh_link,$gh_last_commit,$gh_last_release,$gh_license,$gh_owner,$status" >> output.csv
+            echo "$name,$description,$cran_link,$cran_version,$cran_license,$gh_link,$gh_last_commit,$gh_last_release,$gh_last_release_url,$gh_license,$gh_owner,$status" >> output.csv
 
             echo "-----------------------------------"            
 
