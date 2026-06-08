@@ -134,7 +134,7 @@ jobs:
 
             ##### CRAN info
             echo "CRAN information"
-            if [[ -z "${cran_link}" ]] || [[ "${cran_link}" == " "]]; then
+            if [[ -z "${cran_link}" || $cran_link == " "]]; then
               cran_version=""
               cran_license=""
             else
