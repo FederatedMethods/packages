@@ -68,14 +68,14 @@ jobs:
               gh_last_commit=$(git log -1 --format=%cs)
               echo "last commit: $gh_last_commit"
   
-              # Last release
-              if [ $(git rev-list --tags --max-count=1) ]; then
-                gh_last_release=$(git describe --tags $(git rev-list --tags --max-count=1))
-              else
-                gh_last_release=""
-              fi
+              # Last release. Really this is the last tag.
+              #if [ $(git rev-list --tags --max-count=1) ]; then
+              #  gh_last_release=$(git describe --tags $(git rev-list --tags --max-count=1))
+              #else
+              #  gh_last_release=""
+              #fi
               
-              echo "last GitHub release: $gh_last_release"
+              #echo "last GitHub release: $gh_last_release"
   
               # If there is a NAMES file then parse it to get the functino list and save the output
               if [ -f "NAMESPACE" ]; then
@@ -95,8 +95,15 @@ jobs:
               echo "API response:"
               cat gh_repo_info.json
   
+              # Get the last release name or tag name from the API response
               gh_last_release=$(cat gh_repo_info.json | jq '.latestRelease.name')
-                echo "GitHub last release: $gh_last_release"
+              if [ -z "${gh_last_release}" ] || [ "${gh_last_release}" = '""' ]; then
+                gh_last_release=$(cat gh_repo_info.json | jq '.latestRelease.tagName')
+                if [ -z "${gh_last_release}" ] || [ "${gh_last_release}" = '""' ]; then
+                  gh_last_release=""
+                fi
+              fi
+              echo "GitHub last release: $gh_last_release"
  
 
               # Get the license as it appears in GitHub
