@@ -3,13 +3,21 @@ import datetime
 import shutil
 import os
 
-def main(csv_file_path, html_file_path):
+def main(csv_file_path, html_file_path, functions_file_path):
     print(f"Current working directory: {os.getcwd()}")
 
     if not os.path.exists("output"):
         os.makedirs("output")
 
-    with open(html_file_path, 'w') as html_file:
+    # Count the number of functions in the functions file to include in the stats.
+    # This is not a particularly accurate way to count as it's derived from the 
+    # NAMESPACE file, but some packages have a wild card inclusion not an explicit list.
+    with open(functions_file_path, 'r', encoding='utf-8') as functions_file:
+        full_function_file_text = functions_file.read()
+
+        number_of_functions = full_function_file_text.count(",")
+
+    with open(html_file_path, 'w', encoding='utf-8') as html_file:
 
         # Put html together for this page
         head = '<!DOCTYPE html><html lang="en-GB">'
@@ -24,13 +32,22 @@ def main(csv_file_path, html_file_path):
 
         top_content = '<div class="top-content">'
         top_content += '<h1>DataSHIELD packages</h1>'
-        top_content += '<p>This page lists all the packages that are used in the DataSHIELD ecosystem. It includes packages that are in production, in development, retired, and unknown status.</p>'
+        top_content += '<p>This page lists all the packages that have been developed in the DataSHIELD ecosystem. It includes packages that are in production, in development, retired, and unknown status.</p>'
 
         html_file.write(top_content)
 
         with open(csv_file_path, 'r', encoding='utf-8') as csv_file:
-            reader = csv.reader(csv_file)
-            next(reader)
+            package_list = csv.reader(csv_file)
+
+            # Count the number of lines in the CSV file then go back to the beginning
+            row_count = sum(1 for row in package_list)  # fileObject is your csv.reader
+            csv_file.seek(0)
+
+            stats = f'<p>There are {row_count - 1} packages and {number_of_functions} functions listed on these pages.</p>'
+            html_file.write(stats)
+
+            # Skip header
+            next(package_list)
 
             html_file.write('<table border="1">\n')
 
@@ -56,7 +73,7 @@ def main(csv_file_path, html_file_path):
             retired_rows_count = 1
             unknown_rows_count = 1
 
-            for row in reader:
+            for row in package_list:
                 print(row)
                 this_row = ""
                 
@@ -124,5 +141,5 @@ def main(csv_file_path, html_file_path):
         html_file.write('</body>\n</html>')
 
 if __name__ == '__main__':
-    main('./cache/output.csv', './output/index.html')
+    main('./cache/output.csv', './output/index.html', './cache/functions.txt')
     shutil.copy('./build_web_pages/template/style_main.css', './output/style_main.css')

@@ -101,11 +101,29 @@ def main(package_file_path, functions_file_path, html_file_path):
                 <table>
                     <tr><td class="label">Short description</td><td class="left">{this_package_info.get('short_description', 'No short description available.')}</td></tr>
                     <tr><td class="label">Long description</td><td class="left">{this_package_info.get('DESCRIPTION', {}).get('Description', 'No long description available.')}</td></tr>
-                    <tr><td class="label">CRAN link</td><td class="left">{this_package_info.get('cran_link', '-')}</td></tr>
+                """
+                
+                if this_package_info.get('cran_link'):
+                    html_content += f"""
+                    <tr><td class="label">CRAN link</td><td class="left"><a href="{this_package_info.get('cran_link')}" target="_blank">{this_package_info.get('cran_link')}</a></td></tr>
+                    """
+                else:
+                    html_content += '<tr><td class="label">CRAN link</td><td class="left">N/A</td></tr>'
+                
+                html_content += f"""
                     <tr><td class="label">CRAN version</td><td class="left">{this_package_info.get('cran_version', '-')}</td></tr>
                     <tr><td class="label">CRAN licence</td><td class="left">{this_package_info.get('cran_license', '-')}</td></tr>
                     <tr><td class="label">GitHub last update</td><td class="left">{this_package_info.get('github_last_update', 'No GitHub last update available.')}</td></tr>
-                    <tr><td class="label">GitHub link</td><td class="left">{this_package_info.get('github_link', '-')}</td></tr>
+                """
+
+                if this_package_info.get('github_link'):
+                    html_content += f"""
+                    <tr><td class="label">GitHub link</td><td class="left"><a href="{this_package_info.get('github_link')}" target="_blank">{this_package_info.get('github_link')}</a></td></tr>
+                    """
+                else:
+                    html_content += '<tr><td class="label">CRAN link</td><td class="left">N/A</td></tr>'
+
+                html_content += f"""
                     <tr><td class="label">GitHub version</td><td class="left">{this_package_info.get('github_version', 'No GitHub version available.')}</td></tr>
                     <tr><td class="label">GitHub license</td><td class="left">{this_package_info.get('github_license', 'No GitHub license available.')}</td></tr>
                     <tr><td class="label">GitHub owner</td><td class="left">{this_package_info.get('github_owner', 'No GitHub owner available.')}</td></tr>

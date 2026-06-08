@@ -21,11 +21,14 @@ dsExposome, Exposome package, https://github.com/isglobal-brge/dsExposome,, prod
 dsExposomeClient, Exposome package, https://github.com/isglobal-brge/dsExposomeClient,, production
 dsFlower, flower.ai federated learning package, https://github.com/isglobal-brge/dsFlower,, development
 dsFlowerClient, flower.ai federated learning package, https://github.com/isglobal-brge/dsFlowerClient,, development
+dsFunctionCreator, Support the development and harmonisation of DataSHIELD functions, https://github.com/FlorianSchw/DSFunctionCreator, ,
 dsGeo, Geo package, https://github.com/datashield/dsGeo,, retired
 dsGeoClient, Geo package, https://github.com/datashield/dsGeoClient,, retired
 ds-helper, Data manipulation helper package, https://github.com/timcadman/ds-helper,,
 dsImaging, Clinical imaging package, https://github.com/isglobal-brge/dsImaging,, development
 dsImagingClient, Clinical imaging package, https://github.com/isglobal-brge/dsImagingClient,, development
+dsIntestinalMicrobiomics, Microbiome analysis, https://github.com/FlorianSchw/dsIntestinalMicrobiomics, ,
+dsIntestinalMicrobiomicsClient, Microbiome analysis, https://github.com/FlorianSchw/dsIntestinalMicrobiomicsClient, ,
 dsJobs, Submit and manage HPC jobs, https://github.com/isglobal-brge/dsJobs,, development
 dsJobsClient, Submit and manage HPC jobs, https://github.com/isglobal-brge/dsJobsClient,, development
 dsMediation, Mediation analysis package, https://github.com/datashield/dsMediation,, production
@@ -48,6 +51,7 @@ dsPUcopula, PU copula based synthetic data generator, https://github.com/bips-hb
 dsPUcopulaClient, PU copula based synthetic data generator, https://github.com/bips-hb/dsPUcopulaClient,, development
 dsQueryLibrary, OHDSI query library implementation package, https://github.com/sib-swiss/dsQueryLibrary,,
 dsROCrate, RO-Crate interface, https://github.com/FederatedMethods/dsROCrate, https://cran.r-project.org/package=dsROCrate,development
+dsSupportClient, Package to streamline descriptive stats generation, https://github.com/sofiasiamp/dsSupportClient, ,
 dsSurvival, Survival analysis package, https://github.com/datashield/dsSurvival,, production
 dsSurvivalClient, Survival analysis package, https://github.com/datashield/dsSurvivalClient,, production
 dsSwissKnife, , https://github.com/sib-swiss/dsSwissKnife,, production
