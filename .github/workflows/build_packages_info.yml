@@ -91,10 +91,14 @@ jobs:
   
               # Use the GitHub API to pull in info about the repoisitory
               echo "\nGitHub API information"
-              gh repo view --json codeOfConduct,description,homepageUrl,licenseInfo,owner,parent,updatedAt > gh_repo_info.json
+              gh repo view --json codeOfConduct,description,homepageUrl,latestRelease,licenseInfo,owner,parent,updatedAt > gh_repo_info.json
               echo "API response:"
               cat gh_repo_info.json
   
+              gh_last_release=$(cat gh_repo_info.json | jq '.latestRelease.name')
+                echo "GitHub last release: $gh_last_release"
+ 
+
               # Get the license as it appears in GitHub
               gh_license=$(cat gh_repo_info.json | jq '.licenseInfo.nickname')
               if [ -z "${gh_license}" ] || [ "${gh_license}" = '""' ]; then
