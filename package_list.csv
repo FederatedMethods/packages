@@ -50,7 +50,7 @@ dsPrivacyClient, Differential privacy package, https://github.com/arkhn-oss/dsPr
 dsPUcopula, PU copula based synthetic data generator, https://github.com/bips-hb/dsPUcopula,, development
 dsPUcopulaClient, PU copula based synthetic data generator, https://github.com/bips-hb/dsPUcopulaClient,, development
 dsQueryLibrary, OHDSI query library implementation package, https://github.com/sib-swiss/dsQueryLibrary,,production
-dsQueryLibraryServer, OHDSI query library implementation package, https://github.com/sib-swiss/dsQueryLibrary,,production
+dsQueryLibraryServer, OHDSI query library implementation package, https://github.com/sib-swiss/dsQueryLibraryServer,,production
 dsROCrate, RO-Crate interface, https://github.com/FederatedMethods/dsROCrate, https://cran.r-project.org/package=dsROCrate,development
 dsSupportClient, Package to streamline descriptive stats generation, https://github.com/sofiasiamp/dsSupportClient,,
 dsSurvival, Survival analysis package, https://github.com/datashield/dsSurvival,, production
