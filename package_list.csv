@@ -49,13 +49,14 @@ dsPrivacy, Differential privacy package, https://github.com/arkhn-oss/dsPrivacy,
 dsPrivacyClient, Differential privacy package, https://github.com/arkhn-oss/dsPrivacyClient,,
 dsPUcopula, PU copula based synthetic data generator, https://github.com/bips-hb/dsPUcopula,, development
 dsPUcopulaClient, PU copula based synthetic data generator, https://github.com/bips-hb/dsPUcopulaClient,, development
-dsQueryLibrary, OHDSI query library implementation package, https://github.com/sib-swiss/dsQueryLibrary,,
+dsQueryLibrary, OHDSI query library implementation package, https://github.com/sib-swiss/dsQueryLibrary,,production
+dsQueryLibraryServer, OHDSI query library implementation package, https://github.com/sib-swiss/dsQueryLibrary,,production
 dsROCrate, RO-Crate interface, https://github.com/FederatedMethods/dsROCrate, https://cran.r-project.org/package=dsROCrate,development
 dsSupportClient, Package to streamline descriptive stats generation, https://github.com/sofiasiamp/dsSupportClient,,
 dsSurvival, Survival analysis package, https://github.com/datashield/dsSurvival,, production
 dsSurvivalClient, Survival analysis package, https://github.com/datashield/dsSurvivalClient,, production
 dsSwissKnife, , https://github.com/sib-swiss/dsSwissKnife,, production
-dsSwissKnifeClient, , https://github.com/sib-swiss/dsSwissKnifeClient,, producion
+dsSwissKnifeClient, , https://github.com/sib-swiss/dsSwissKnifeClient,, production
 dsSynthetic, Synthetic data generation package,  https://github.com/tombisho/dsSynthetic,,
 dsSyntheticClient, Synthetic data generation package,  https://github.com/tombisho/dsSyntheticClient,,
 dsTidyverse, The dsTidyverse package, https://github.com/molgenis/ds-tidyverse, https://cran.r-project.org/package=dsTidyverse, production
