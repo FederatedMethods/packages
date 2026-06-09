@@ -1,12 +1,12 @@
 # Start with a list of packages in packages.csv, and get external data about them (e.g. last commit date) to generate an HTML page with the package information. This workflow is triggered manually from the Actions tab.
 # Olly Butters
-# 15/5/26
+# 9/6/26
 name: Package list
 
 # Controls when the workflow will run
 on:
   schedule:
-    - cron: '30 5 * * 0'
+    - cron: '30 5 * * *'
       timezone: "Europe/London"
   push:
     branches: [ "main" ]
@@ -89,7 +89,7 @@ jobs:
                 fi
               fi
   
-              # Use the GitHub API to pull in info about the repoisitory
+              # Use the GitHub API to pull in info about the repository
               echo "\nGitHub API information"
               gh repo view --json codeOfConduct,description,homepageUrl,latestRelease,licenseInfo,owner,parent,updatedAt > gh_repo_info.json
               echo "API response:"

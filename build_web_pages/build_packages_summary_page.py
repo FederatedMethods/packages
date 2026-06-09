@@ -1,7 +1,7 @@
-import csv
 import datetime
 import shutil
 import os
+from utils import parse_package_info
 
 def main(csv_file_path, html_file_path, functions_file_path):
     print(f"Current working directory: {os.getcwd()}")
@@ -32,109 +32,115 @@ def main(csv_file_path, html_file_path, functions_file_path):
 
         top_content = '<div class="top-content">'
         top_content += '<h1>DataSHIELD packages</h1>'
-        top_content += '<p>This page lists all the packages that have been developed in the DataSHIELD ecosystem. It includes packages that are in production, in development, retired, and unknown status.</p>'
+        top_content += '<p>This page lists all the packages that have been developed in the <a href="https://www.datashield.org">DataSHIELD</a> ecosystem. It includes packages that are in production, in development, retired, and unknown status.</p>'
 
         html_file.write(top_content)
 
-        with open(csv_file_path, 'r', encoding='utf-8') as csv_file:
-            package_list = csv.reader(csv_file)
+        package_info = parse_package_info(csv_file_path)
 
-            # Count the number of lines in the CSV file then go back to the beginning
-            row_count = sum(1 for row in package_list)  # fileObject is your csv.reader
-            csv_file.seek(0)
+        stats = f'<p>There are {len(package_info)} packages and {number_of_functions} functions listed on these pages.</p>'
+        html_file.write(stats)
 
-            stats = f'<p>There are {row_count - 1} packages and {number_of_functions} functions listed on these pages.</p>'
-            html_file.write(stats)
+        html_file.write('<table border="1">\n')
 
-            # Skip header
-            next(package_list)
+        html_file.write('<tr><td></td>')
+        html_file.write('<th>Name</th>')
+        html_file.write('<th>Description</th>')
+        html_file.write('<th>CRAN version</th>')
+        html_file.write('<th>CRAN license</th>')
+        html_file.write('<th>GitHub last update</th>')
+        html_file.write('<th>GitHub version</th>')
+        html_file.write('<th>GitHub license</th>')
+        html_file.write('<th>GitHub owner</th>')
+        html_file.write('</tr>')
 
-            html_file.write('<table border="1">\n')
+        production_rows = ""
+        development_rows = ""
+        retired_rows = ""
+        unknown_rows = ""
 
-            html_file.write('<tr><td></td>')
-            html_file.write('<th>Name</th>')
-            html_file.write('<th>Description</th>')
-            html_file.write('<th>CRAN version</th>')
-            html_file.write('<th>CRAN license</th>')
-            html_file.write('<th>GitHub last update</th>')
-            html_file.write('<th>GitHub version</th>')
-            html_file.write('<th>GitHub license</th>')
-            html_file.write('<th>GitHub owner</th>')
-            html_file.write('</tr>')
+        # Counts for each rows
+        production_rows_count = 1
+        development_rows_count = 1
+        retired_rows_count = 1
+        unknown_rows_count = 1
 
-            production_rows = ""
-            development_rows = ""
-            retired_rows = ""
-            unknown_rows = ""
+        #for row in package_list:
+        for this_package_name, this_package_info in package_info.items():
+            print(this_package_name)
+            print(this_package_info)
+            this_row = ""
 
-            # Counts for each rows
-            production_rows_count = 1
-            development_rows_count = 1
-            retired_rows_count = 1
-            unknown_rows_count = 1
+            # Add GitHub link if available, otherwise just the name
+            this_row += '<td class="left"><a href="packages.html#' + this_package_name + '">' + this_package_name + '</a></td>'
 
-            for row in package_list:
-                print(row)
-                this_row = ""
-                
-                # Add GitHub link if available, otherwise just the name
-                this_row += '<td class="left"><a href="packages.html#' + row[0] + '">' + row[0] + '</a></td>'
+            # Description
+            if len(this_package_info['short_description']) > 0:
+                this_row += '<td class="left">' + this_package_info['short_description'] + '</td>'
+            else:
+                this_row += '<td></td>'
 
-                # Description
-                if len(row[1]) > 0:
-                    this_row += '<td class="left">' + row[1] + '</td>'
-                else:
-                    this_row += '<td></td>'
-                
-                # CRAN version with link
-                if len(row[2]) > 0:
-                    this_row += '<td><a href="' + row[2] + '" target="blank">' + row[3] + '</a></td>' 
-                else:
-                    this_row += '<td></td>'
+            # CRAN version with link
+            if len(this_package_info.get('cran_link')) > 0:
+                this_row += '<td><a href="' + this_package_info['cran_link'] + '" target="blank">' + this_package_info['cran_version'] + '</a></td>' 
+            else:
+                this_row += '<td></td>'
 
-                this_row += '<td>' + row[4] + '</td>' # CRAN license
-                this_row += '<td>' + row[6] + '</td>' # GH last update
-                this_row += '<td>' + row[7] + '</td>' # GH version
-                this_row += '<td>' + row[9] + '</td>' # GH license
-                this_row += '<td class="left">' + row[10] + '</td>' # GH owner
+            this_row += '<td>' + this_package_info.get('cran_license', "") + '</td>' # CRAN license
+            this_row += '<td>' + this_package_info.get('github_last_update', "") + '</td>' # GH last update
+            
+                # GH version with link
+            if this_package_info.get('github_version_url') == "null":
+                this_row += '<td></td>'
+            else:
+                this_row += '<td><a href="' + this_package_info['github_version_url'] + '" target="_blank">' + this_package_info['github_version'] + '</a></td>'
+            
+            # GH license
+            if this_package_info.get('github_license') == "null":
+                this_row += '<td></td>'
+            else:
+                this_row += '<td>' + this_package_info.get('github_license', "") + '</td>'
+            
+            this_row += '<td class="left"><a href="https://github.com/' + this_package_info['github_owner'] + '" target="_blank">' + this_package_info['github_owner'] + '</a></td>' # GH owner
 
-                # Group rows by status and add put a row number in
-                if row[11].strip() == 'production':
-                    production_rows += '<tr>'
-                    production_rows += '<td>' + str(production_rows_count) + '</td>' # Row number
-                    production_rows += this_row
-                    production_rows += '</tr>'
-                    production_rows_count += 1
-                elif row[11].strip() == 'development':
-                    development_rows += '<tr>'
-                    development_rows += '<td>' + str(development_rows_count) + '</td>'
-                    development_rows += this_row
-                    development_rows += '</tr>'
-                    development_rows_count += 1
-                elif row[11].strip() == 'retired':
-                    retired_rows += '<tr>'
-                    retired_rows += '<td>' + str(retired_rows_count) + '</td>'
-                    retired_rows += this_row
-                    retired_rows += '</tr>'
-                    retired_rows_count += 1
-                else:
-                    unknown_rows += '<tr>'
-                    unknown_rows += '<td>' + str(unknown_rows_count) + '</td>'
-                    unknown_rows += this_row
-                    unknown_rows += '</tr>'
-                    unknown_rows_count += 1
+            # Group rows by status and add put a row number in
+            if this_package_info['status'].strip() == 'production':
+                production_rows += '<tr>'
+                production_rows += '<td>' + str(production_rows_count) + '</td>' # Row number
+                production_rows += this_row
+                production_rows += '</tr>'
+                production_rows_count += 1
+            elif this_package_info['status'].strip() == 'development':
+                development_rows += '<tr>'
+                development_rows += '<td>' + str(development_rows_count) + '</td>'
+                development_rows += this_row
+                development_rows += '</tr>'
+                development_rows_count += 1
+            elif this_package_info['status'].strip() == 'retired':
+                retired_rows += '<tr>'
+                retired_rows += '<td>' + str(retired_rows_count) + '</td>'
+                retired_rows += this_row
+                retired_rows += '</tr>'
+                retired_rows_count += 1
+            else:
+                unknown_rows += '<tr>'
+                unknown_rows += '<td>' + str(unknown_rows_count) + '</td>'
+                unknown_rows += this_row
+                unknown_rows += '</tr>'
+                unknown_rows_count += 1
 
-            # Build the table with the rows grouped by status
-            html_file.write('<tr><td colspan="9">Production</td></tr>')
-            html_file.write(production_rows)
-            html_file.write('<tr><td colspan="9">Development</td></tr>')
-            html_file.write(development_rows)
-            html_file.write('<tr><td colspan="9">Retired</td></tr>')
-            html_file.write(retired_rows)
-            html_file.write('<tr><td colspan="9">Unknown</td></tr>')
-            html_file.write(unknown_rows)
-            html_file.write('</table>')
+        # Build the table with the rows grouped by status
+        html_file.write('<tr><td colspan="9">Production</td></tr>')
+        html_file.write(production_rows)
+        html_file.write('<tr><td colspan="9">Development</td></tr>')
+        html_file.write(development_rows)
+        html_file.write('<tr><td colspan="9">Retired</td></tr>')
+        html_file.write(retired_rows)
+        html_file.write('<tr><td colspan="9">Unknown</td></tr>')
+        html_file.write(unknown_rows)
+        html_file.write('</table>')
 
+        html_file.write('<hr/>')
         html_file.write('Generated on ' + datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
         html_file.write('&nbsp;&nbsp;Made by the <a href="https://github.com/FederatedMethods">Federated Methods team</a>')
 

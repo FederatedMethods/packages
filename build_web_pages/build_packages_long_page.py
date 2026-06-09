@@ -1,9 +1,9 @@
-import csv
 import datetime
 import shutil
 import os
 import re
 from parse_DESCRIPTION_file import parse_description_file
+from utils import parse_package_info
 
 def main(package_file_path, functions_file_path, html_file_path):
     """
@@ -23,28 +23,8 @@ def main(package_file_path, functions_file_path, html_file_path):
     if not os.path.exists("output"):
         os.makedirs("output")
 
-    # Initialize a dictionary to hold package information
-    package_info = {}
-
-    # Parse the package information from the CSV file
-    with open(package_file_path, 'r', encoding='utf-8') as csv_file:
-        reader = csv.reader(csv_file)
-        next(reader)
-
-        for row in reader:
-            package_name = row[0]
-            package_info[package_name] = {
-                "short_description": row[1],
-                "cran_link": row[2],
-                "cran_version": row[3],
-                "cran_license": row[4],
-                "github_link": row[5],
-                "github_last_update": row[6],
-                "github_version": row[7],
-                "github_license": row[9],
-                "github_owner": row[10],
-                "status": row[11]
-            }
+    # Dictionary to hold package information
+    package_info = parse_package_info(package_file_path)
 
     # Parse the functions.txt file
     with open(functions_file_path, 'r', encoding='utf-8') as file:
@@ -56,6 +36,10 @@ def main(package_file_path, functions_file_path, html_file_path):
                 package_name = match.group(1)
                 functions = match.group(2).split(',')
                 package_info[package_name]["functions"] = functions
+
+    with open(functions_file_path, 'r', encoding='utf-8') as functions_file:
+        full_function_file_text = functions_file.read()
+        number_of_functions = full_function_file_text.count(",")
 
     # Parse the DESCRIPTION files
     for package_name in package_info.keys():
@@ -88,9 +72,12 @@ def main(package_file_path, functions_file_path, html_file_path):
 
         top_content = '<div class="top-content">'
         top_content += '<h1>DataSHIELD packages</h1>'
-        top_content += '<p>This page lists all the packages that are used in the DataSHIELD ecosystem. It includes packages that are in production, in development, retired, and unknown status.</p>'
+        top_content += '<p>This page lists all the packages that have been developed in the <a href="https://www.datashield.org">DataSHIELD</a> ecosystem. It includes packages that are in production, in development, retired, and unknown status. More info is in the <a href="./faq.html">FAQ</a>.</p>'
 
         html_file.write(top_content)
+
+        stats = f'<p>There are {len(package_info)} packages and {number_of_functions} functions listed on these pages.</p>'
+        html_file.write(stats)
 
         for this_package_name, this_package_info in package_info.items():
             try:
@@ -102,7 +89,7 @@ def main(package_file_path, functions_file_path, html_file_path):
                     <tr><td class="label">Short description</td><td class="left">{this_package_info.get('short_description', 'No short description available.')}</td></tr>
                     <tr><td class="label">Long description</td><td class="left">{this_package_info.get('DESCRIPTION', {}).get('Description', 'No long description available.')}</td></tr>
                 """
-                
+
                 if this_package_info.get('cran_link'):
                     html_content += f"""
                     <tr><td class="label">CRAN link</td><td class="left"><a href="{this_package_info.get('cran_link')}" target="_blank">{this_package_info.get('cran_link')}</a></td></tr>
@@ -123,8 +110,14 @@ def main(package_file_path, functions_file_path, html_file_path):
                 else:
                     html_content += '<tr><td class="label">CRAN link</td><td class="left">N/A</td></tr>'
 
+                if this_package_info.get('github_version_url') == 'null':
+                    html_content += '<tr><td class="label">GitHub version</td><td class="left"></td></tr>'
+                else:
+                    html_content += f"""
+                    <tr><td class="label">GitHub version</td><td class="left"><a href="{this_package_info.get('github_version_url')}" target="_blank">{this_package_info.get('github_version')}</a></td></tr>
+                    """
+
                 html_content += f"""
-                    <tr><td class="label">GitHub version</td><td class="left">{this_package_info.get('github_version', 'No GitHub version available.')}</td></tr>
                     <tr><td class="label">GitHub license</td><td class="left">{this_package_info.get('github_license', 'No GitHub license available.')}</td></tr>
                     <tr><td class="label">GitHub owner</td><td class="left">{this_package_info.get('github_owner', 'No GitHub owner available.')}</td></tr>
                     <tr><td class="label">Status</td><td class="left">{this_package_info.get('status', 'Unknown')}</td></tr> 
@@ -138,6 +131,7 @@ def main(package_file_path, functions_file_path, html_file_path):
                 continue
 
         # Footer
+        html_file.write('<hr/>')
         html_file.write('Generated on ' + datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
         html_file.write('&nbsp;&nbsp;Made by the <a href="https://github.com/FederatedMethods">Federated Methods team</a>')
 
@@ -146,3 +140,4 @@ def main(package_file_path, functions_file_path, html_file_path):
 if __name__ == '__main__':
     main('cache/output.csv', 'cache/functions.txt', './output/packages.html')
     shutil.copy('./build_web_pages/template/style_main.css', './output/style_main.css')
+    shutil.copy('./build_web_pages/template/faq.html', './output/faq.html')
