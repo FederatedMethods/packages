@@ -41,9 +41,9 @@ def main(package_file_path, functions_file_path, html_file_path):
                 "github_link": row[5],
                 "github_last_update": row[6],
                 "github_version": row[7],
-                "github_license": row[8],
-                "github_owner": row[9],
-                "status": row[10]
+                "github_license": row[9],
+                "github_owner": row[10],
+                "status": row[11]
             }
 
     # Parse the functions.txt file

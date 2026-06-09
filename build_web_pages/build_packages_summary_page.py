@@ -95,23 +95,23 @@ def main(csv_file_path, html_file_path, functions_file_path):
                 this_row += '<td>' + row[4] + '</td>' # CRAN license
                 this_row += '<td>' + row[6] + '</td>' # GH last update
                 this_row += '<td>' + row[7] + '</td>' # GH version
-                this_row += '<td>' + row[8] + '</td>' # GH license
-                this_row += '<td class="left">' + row[9] + '</td>' # GH owner
+                this_row += '<td>' + row[9] + '</td>' # GH license
+                this_row += '<td class="left">' + row[10] + '</td>' # GH owner
 
                 # Group rows by status and add put a row number in
-                if row[10].strip() == 'production':
+                if row[11].strip() == 'production':
                     production_rows += '<tr>'
                     production_rows += '<td>' + str(production_rows_count) + '</td>' # Row number
                     production_rows += this_row
                     production_rows += '</tr>'
                     production_rows_count += 1
-                elif row[10].strip() == 'development':
+                elif row[11].strip() == 'development':
                     development_rows += '<tr>'
                     development_rows += '<td>' + str(development_rows_count) + '</td>'
                     development_rows += this_row
                     development_rows += '</tr>'
                     development_rows_count += 1
-                elif row[10].strip() == 'retired':
+                elif row[11].strip() == 'retired':
                     retired_rows += '<tr>'
                     retired_rows += '<td>' + str(retired_rows_count) + '</td>'
                     retired_rows += this_row
