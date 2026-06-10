@@ -71,7 +71,7 @@ def main(package_file_path, functions_file_path, html_file_path):
         html_file.write(head)
 
         top_content = '<div class="top-content">'
-        top_content += '<h1>DataSHIELD packages</h1>'
+        top_content += '<h1>DataSHIELD packages</h1><a href="#top"></a>'
         top_content += '<p>This page lists all the packages that have been developed in the <a href="https://www.datashield.org">DataSHIELD</a> ecosystem. It includes packages that are in production, in development, retired, and unknown status. More info is in the <a href="./faq.html">FAQ</a>.</p>'
 
         html_file.write(top_content)
@@ -83,7 +83,7 @@ def main(package_file_path, functions_file_path, html_file_path):
             try:
                 html_content = f"""
                 
-                <h2><h2 id="{this_package_name}"><a href="#{this_package_name}">{this_package_name}</a></h2></h2>
+                <h2 id="{this_package_name}"><a href="#{this_package_name}">{this_package_name}</a></h2>
 
                 <table>
                     <tr><td class="label">Short description</td><td class="left">{this_package_info.get('short_description', 'No short description available.')}</td></tr>
@@ -132,6 +132,7 @@ def main(package_file_path, functions_file_path, html_file_path):
                 html_content += f"""
                     <tr><td class="label">Functions</td><td class="left">{', '.join(this_package_info.get('functions', [])) if 'functions' in this_package_info else 'No functions listed.'}</td></tr>
                 </table>
+                <p style="text-align:right"><a href=#top>Jump to top of page</a></p>
                 """
 
                 html_file.write(html_content)

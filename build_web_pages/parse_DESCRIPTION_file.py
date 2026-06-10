@@ -12,7 +12,7 @@ def parse_description_file(file_path):
     current_key = None
     current_value = []
 
-    with open(file_path, 'r') as file:
+    with open(file_path, 'r', encoding='utf-8') as file:
         for line in file:
             # Skip empty lines
             if not line.strip():
