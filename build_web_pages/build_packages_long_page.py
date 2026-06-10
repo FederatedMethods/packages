@@ -120,7 +120,16 @@ def main(package_file_path, functions_file_path, html_file_path):
                 html_content += f"""
                     <tr><td class="label">GitHub license</td><td class="left">{this_package_info.get('github_license', 'No GitHub license available.')}</td></tr>
                     <tr><td class="label">GitHub owner</td><td class="left">{this_package_info.get('github_owner', 'No GitHub owner available.')}</td></tr>
-                    <tr><td class="label">Status</td><td class="left">{this_package_info.get('status', 'Unknown')}</td></tr> 
+                    <tr><td class="label">Status</td><td class="left">{this_package_info.get('status', 'Unknown')}</td></tr>
+                """
+
+                if this_package_info.get('DESCRIPTION'):
+                    if this_package_info.get('DESCRIPTION').get('maintainer_string'):
+                        html_content += f"""<tr><td class="label">Maintainer</td><td class="left">{this_package_info.get('DESCRIPTION').get('maintainer_string')}</td></tr>"""
+                    else:
+                        html_content += '<tr><td class="label">Maintainer</td><td class="left"></td></tr>'
+
+                html_content += f"""
                     <tr><td class="label">Functions</td><td class="left">{', '.join(this_package_info.get('functions', [])) if 'functions' in this_package_info else 'No functions listed.'}</td></tr>
                 </table>
                 """

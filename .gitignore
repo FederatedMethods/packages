@@ -2,3 +2,5 @@
 output.csv
 /cache/*
 *.pyc
+/*/*.pyc
+/*/*/*.pyc
