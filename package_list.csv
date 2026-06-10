@@ -61,4 +61,4 @@ dsSynthetic, Synthetic data generation package,  https://github.com/tombisho/dsS
 dsSyntheticClient, Synthetic data generation package,  https://github.com/tombisho/dsSyntheticClient,,retired
 dsTidyverse, The dsTidyverse package, https://github.com/molgenis/ds-tidyverse, https://cran.r-project.org/package=dsTidyverse, production
 dsTidyverseClient, The dsTidyverseClient package, https://github.com/molgenis/ds-tidyverse-client, https://cran.r-project.org/package=dsTidyverseClient, production
-dsUpload, Data uploading tool, https://github.com/lifecycle-project/ds-upload,,
+dsUpload, Data uploading tool, https://github.com/lifecycle-project/ds-upload,,production

@@ -32,7 +32,7 @@ def main(csv_file_path, html_file_path, functions_file_path):
 
         top_content = '<div class="top-content">'
         top_content += '<h1>DataSHIELD packages</h1>'
-        top_content += '<p>This page lists all the packages that have been developed in the <a href="https://www.datashield.org">DataSHIELD</a> ecosystem. It includes packages that are in production, in development, retired, and unknown status.</p>'
+        top_content += '<p>This page lists all the packages that have been developed in the <a href="https://www.datashield.org">DataSHIELD</a> ecosystem. It includes packages that are in production, in development, retired, and unknown status. More info is in the <a href="./faq.html">FAQ</a>.</p>'
 
         html_file.write(top_content)
 
