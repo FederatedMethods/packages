@@ -1,8 +1,8 @@
 name, description, github_link, cran_link, status
 dsBase, The dsBase package, https://github.com/datashield/dsbase, https://cran.r-project.org/package=dsBase, production
 dsBaseClient, The dsBaseClient package, https://github.com/datashield/dsbaseclient, https://cran.r-project.org/package=dsBaseClient, production
-dsBayesPathAnalysis, Bayes Path Analysis package, https://github.com/StuartWheater/dsBayesPathAnalysis,,
-dsBayesPathAnalysisClient, Bayes Path Analysis package, https://github.com/StuartWheater/dsBayesPathAnalysisClient,,
+dsBayesPathAnalysis, Bayes Path Analysis package, https://github.com/StuartWheater/dsBayesPathAnalysis,,retired
+dsBayesPathAnalysisClient, Bayes Path Analysis package, https://github.com/StuartWheater/dsBayesPathAnalysisClient,,retired
 dsBinVal, ROC-GLM and Calibrationcurve package, https://github.com/difuture-lmu/dsBinVal,,
 dsBoltzmannMachines, Deep Boltzmann machines package, https://github.com/stefan-m-lenz/dsBoltzmannMachines,,
 dsBoltzmannMachinesClient, Deep Boltzmann machines package, https://github.com/stefan-m-lenz/dsBoltzmannMachinesClient,,
@@ -24,7 +24,7 @@ dsFlowerClient, flower.ai federated learning package, https://github.com/isgloba
 dsFunctionCreator, Support the development and harmonisation of DataSHIELD functions, https://github.com/FlorianSchw/DSFunctionCreator,,
 dsGeo, Geo package, https://github.com/datashield/dsGeo,, retired
 dsGeoClient, Geo package, https://github.com/datashield/dsGeoClient,, retired
-ds-helper, Data manipulation helper package, https://github.com/timcadman/ds-helper,,
+ds-helper, Data manipulation helper package, https://github.com/timcadman/ds-helper,,production
 dsImaging, Clinical imaging package, https://github.com/isglobal-brge/dsImaging,, development
 dsImagingClient, Clinical imaging package, https://github.com/isglobal-brge/dsImagingClient,, development
 dsIntestinalMicrobiomics, Microbiome analysis, https://github.com/FlorianSchw/dsIntestinalMicrobiomics,,
@@ -33,8 +33,8 @@ dsJobs, Submit and manage HPC jobs, https://github.com/isglobal-brge/dsJobs,, de
 dsJobsClient, Submit and manage HPC jobs, https://github.com/isglobal-brge/dsJobsClient,, development
 dsMediation, Mediation analysis package, https://github.com/datashield/dsMediation,, production
 dsMediationClient, Mediation analysis package, https://github.com/datashield/dsMediationClient,, production
-dsMicrobiome, Microbiome package, https://github.com/StuartWheater/dsMicrobiome,,
-dsMicrobiomeClient, Microbiome package, https://github.com/StuartWheater/dsMicrobiomeClient,,
+dsMicrobiome, Microbiome package, https://github.com/StuartWheater/dsMicrobiome,,retired
+dsMicrobiomeClient, Microbiome package, https://github.com/StuartWheater/dsMicrobiomeClient,,retired
 dsML, Machine learning package, https://github.com/isglobal-brge/dsML,, production
 dsMLClient, Machine learning package, https://github.com/isglobal-brge/dsMLClient,, production
 dsMTLBase, Multitask learning package, https://github.com/transbioZI/dsMTLBase,, production
@@ -57,8 +57,8 @@ dsSurvival, Survival analysis package, https://github.com/datashield/dsSurvival,
 dsSurvivalClient, Survival analysis package, https://github.com/datashield/dsSurvivalClient,, production
 dsSwissKnife, , https://github.com/sib-swiss/dsSwissKnife,, production
 dsSwissKnifeClient, , https://github.com/sib-swiss/dsSwissKnifeClient,, production
-dsSynthetic, Synthetic data generation package,  https://github.com/tombisho/dsSynthetic,,
-dsSyntheticClient, Synthetic data generation package,  https://github.com/tombisho/dsSyntheticClient,,
+dsSynthetic, Synthetic data generation package,  https://github.com/tombisho/dsSynthetic,,retired
+dsSyntheticClient, Synthetic data generation package,  https://github.com/tombisho/dsSyntheticClient,,retired
 dsTidyverse, The dsTidyverse package, https://github.com/molgenis/ds-tidyverse, https://cran.r-project.org/package=dsTidyverse, production
 dsTidyverseClient, The dsTidyverseClient package, https://github.com/molgenis/ds-tidyverse-client, https://cran.r-project.org/package=dsTidyverseClient, production
 dsUpload, Data uploading tool, https://github.com/lifecycle-project/ds-upload,,
