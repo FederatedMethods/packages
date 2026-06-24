@@ -22,8 +22,8 @@ dsExposomeClient, Exposome package, https://github.com/isglobal-brge/dsExposomeC
 dsFlower, flower.ai federated learning package, https://github.com/isglobal-brge/dsFlower,, development
 dsFlowerClient, flower.ai federated learning package, https://github.com/isglobal-brge/dsFlowerClient,, development
 dsFunctionCreator, Support the development and harmonisation of DataSHIELD functions, https://github.com/FlorianSchw/DSFunctionCreator,,
-dsGamlss, Generalized Additive Models for Location, Scale and Shape, https://github.com/bips-hb/dsGamlss,, production
-dsGamlssClient, Generalized Additive Models for Location, Scale and Shape, https://github.com/bips-hb/dsGamlssClient,, production
+dsGamlss, Generalized Additive Models for Location Scale and Shape, https://github.com/bips-hb/dsGamlss,, production
+dsGamlssClient, Generalized Additive Models for Location Scale and Shape, https://github.com/bips-hb/dsGamlssClient,, production
 dsGeo, Geo package, https://github.com/datashield/dsGeo,, retired
 dsGeoClient, Geo package, https://github.com/datashield/dsGeoClient,, retired
 ds-helper, Data manipulation helper package, https://github.com/timcadman/ds-helper,,production
