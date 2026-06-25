@@ -7,6 +7,8 @@ dsBinVal, ROC-GLM and Calibrationcurve package, https://github.com/difuture-lmu/
 dsBoltzmannMachines, Deep Boltzmann machines package, https://github.com/stefan-m-lenz/dsBoltzmannMachines,,
 dsBoltzmannMachinesClient, Deep Boltzmann machines package, https://github.com/stefan-m-lenz/dsBoltzmannMachinesClient,,
 dsCalibration, Calibration assessment package, https://github.com/difuture-lmu/dsCalibration,,
+dsCCPhos, DKTK-CCP data science package, https://github.com/BastianReiter/dsCCPhos,,production
+dsCCPhosClient, DKTK-CCP data science package, https://github.com/BastianReiter/dsCCPhosClient,,production
 dsClusterAnalysis, Cluster analysis package, https://github.com/FlorianSchw/dsClusterAnalysis,,
 dsClusterAnalysisClient, Cluster analysis package, https://github.com/FlorianSchw/dsClusterAnalysisClient,,
 dsCoda, Coda package, https://github.com/datashield/dsCoda,,development
@@ -21,6 +23,8 @@ dsExposome, Exposome package, https://github.com/isglobal-brge/dsExposome,, prod
 dsExposomeClient, Exposome package, https://github.com/isglobal-brge/dsExposomeClient,, production
 dsFlower, flower.ai federated learning package, https://github.com/isglobal-brge/dsFlower,, development
 dsFlowerClient, flower.ai federated learning package, https://github.com/isglobal-brge/dsFlowerClient,, development
+dsFreda, Data augmentation package, https://github.com/BastianReiter/dsFreda,,production
+dsFredaClient, Data augmentation package, https://github.com/BastianReiter/dsFredaClient,,production
 dsFunctionCreator, Support the development and harmonisation of DataSHIELD functions, https://github.com/FlorianSchw/DSFunctionCreator,,
 dsGamlss, Generalized Additive Models for Location Scale and Shape, https://github.com/bips-hb/dsGamlss,, production
 dsGamlssClient, Generalized Additive Models for Location Scale and Shape, https://github.com/bips-hb/dsGamlssClient,, production
