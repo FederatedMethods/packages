@@ -184,7 +184,7 @@ li {
 /* LINKS */
 a:link {
   color: #193E72;
-  text-decoration:none;
+  text-decoration:underline;
 }
 
 a:visited {

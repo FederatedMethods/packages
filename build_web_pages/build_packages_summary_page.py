@@ -142,7 +142,7 @@ def main(csv_file_path, html_file_path, functions_file_path):
 
         html_file.write('<hr/>')
         html_file.write('Generated on ' + datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
-        html_file.write('&nbsp;&nbsp;Made by the <a href="https://github.com/FederatedMethods">Federated Methods team</a>')
+        html_file.write('&nbsp;&nbsp;Made by the <a href="https://github.com/FederatedMethods" target="_blank">Federated Methods team</a>')
 
         html_file.write('</body>\n</html>')
 
