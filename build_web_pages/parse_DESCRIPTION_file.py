@@ -42,52 +42,62 @@ def parse_description_file(file_path):
         authors_string = parsed_data['Authors@R']
         authors_string = authors_string.replace('\n', "")
         authors_string = authors_string.replace(" ", "")
-        authors_string = authors_string.replace("c(person(", "")
-        authors_string = authors_string[:-2]
+        authors_string = authors_string.replace(",,", ",")
+
+        # Sometimes there are multiple authors, sometimes just one. The regex is different for each case.
+        if len(re.findall("c\(person\(", authors_string)) > 0:
+            print("Multiple authors")
+            authors_string = authors_string.replace("c(person(", "")
+            authors_string = authors_string[:-2]
+        else:
+            authors_string = authors_string.replace("person(", "")
+            authors_string = authors_string[:-1]
+        
         temp = authors_string.split("),person(")
 
         parsed_data["Authors"] = []
 
         for this_author in temp:
-            print(this_author)
+            print("RAW: " + this_author)
             # Email
-            email = re.findall("email=\"([\w\-\.]+@[\w\-\.]+\.+[\w\-]{2,4})\"", this_author)
+            email = re.findall("[email=]?\"([\w\-\.]+@[\w\-\.]+\.+[\w\-]+)\"", this_author)
             if len(email):
-                this_author = re.sub("email=\"([\w\-\.]+@[\w\-\.]+\.+[\w\-]{2,4})\"","", this_author)
+                # if there is an email then remove it from the string so we can parse the rest of the author info
+                this_author = re.sub("[email]?=\"([\w\-\.]+@[\w\-\.]+\.+[\w\-]+)\"","", this_author)
                 email = email[0]
-                print(email)
             else:
                 email = ""
+            print("email: " + email)
 
             #ORCID
             orcid = re.findall("comment=c\(ORCID=\"([0-9]+-[0-9]+-[0-9]+-[0-9]+)\"\)", this_author)
             if len(orcid):
                 this_author = re.sub("comment=c\(ORCID=\"([0-9]+-[0-9]+-[0-9]+-[0-9]+)\"\)","", this_author)
                 orcid = orcid[0]
-                print(orcid)
             else:
                 orcid = ""
+            print("orcid: " + orcid)
 
             #Role
             role = re.findall("role=c?\(?([\"\w+\",?]+)\)?", this_author)
             this_author = re.sub("role=c?\(?([\"\w+\",?]+)\)?","", this_author)
-            print(role)
+            print("role: " + str(role))
 
             # The only thing left should be the name, either with or without given/family
             this_author = this_author.replace(",,",",")
             temp = this_author.split(",")
             given = temp[0]
             given = given.replace("given=","").replace('"',"")
-            print(given)
+            print("given: " + given)
             family = temp[1]
             family = family.replace("family=","").replace('"',"")
-            print(family)
+            print("family: " + family)
 
             parsed_data["Authors"].append({"given":given, "family":family, "orcid":orcid, "role":role, "email":email})
 
             # Create a maintainer_string out of the relevant author
             if "cre" in str(role):
-                print("MAINTAINER")
+                print("IS MAINTAINER")
                 parsed_data["maintainer_string"] = f"""{given} {family} ({email})"""
 
     elif 'Maintainer' in parsed_data:
