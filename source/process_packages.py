@@ -13,8 +13,6 @@ from pprint import pprint
 import shutil
 import subprocess
 import urllib.request as urllib2
-# only using this for date grabbing, could just dump to file or capture output of os.system?
-import git
 from parse_DESCRIPTION_file import parse_description_file
 
 
@@ -96,8 +94,7 @@ def main(clone = False, cache_dir = "cache",delete_cache = False, package_input_
 
             # Get the last commit date
             try:
-                this_repo = git.Repo(github_link_end_part)
-                last_commit_date = this_repo.git.log('-1', '--pretty=format:%cs')
+                last_commit_date = subprocess.run(['git', 'log', '-1', '--pretty=format:%cs'], capture_output=True, text=True, check=True).stdout.strip()
                 print(f"Repo last commit date: {last_commit_date}")
                 package_info['repo']['last_commit_date'] = last_commit_date
             except Exception as e:
