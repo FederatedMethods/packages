@@ -94,7 +94,7 @@ def main(clone = False, cache_dir = "cache",delete_cache = False, package_input_
 
             # Get the last commit date
             try:
-                last_commit_date = subprocess.run(['git', 'log', '-1', '--pretty=format:%cs'], capture_output=True, text=True, check=True).stdout.strip()
+                last_commit_date = subprocess.run(['git', '-C', github_link_end_part, 'log', '-1', '--pretty=format:%cs'], capture_output=True, text=True, check=True).stdout.strip()
                 print(f"Repo last commit date: {last_commit_date}")
                 package_info['repo']['last_commit_date'] = last_commit_date
             except Exception as e:
