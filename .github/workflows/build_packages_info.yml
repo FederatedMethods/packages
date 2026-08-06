@@ -8,8 +8,6 @@ on:
   schedule:
     - cron: '30 5 * * *'
       timezone: "Europe/London"
-  push:
-    branches: [ "main" ]
   workflow_dispatch:
 
 jobs:
