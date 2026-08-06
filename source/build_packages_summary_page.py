@@ -1,21 +1,42 @@
+"""
+Function to generate an HTML summary page listing DataSHIELD packages.
+Olly Butters
+5/8/2026
+"""
+
 import datetime
+import json
 import shutil
 import os
-from utils import parse_package_info
+from pprint import pprint
 
-def main(csv_file_path, html_file_path, functions_file_path):
+def main(packages_file_path = './output/metadata/packages.json', html_file_path = './output/html/index.html'):
+    """
+    Main function to generate an HTML summary page listing DataSHIELD packages.
+    This function processes package information from a JSON file generated in process_packages.py,
+    and generates an HTML page summarizing the information.
+    Args:
+        packages_file_path (str): Path to the JSON file containing package information.
+        html_file_path (str): Path to the output HTML file to be generated.
+    """
     print(f"Current working directory: {os.getcwd()}")
 
-    if not os.path.exists("output"):
-        os.makedirs("output")
+    if not os.path.exists("output/html"):
+        os.makedirs("output/html")
 
-    # Count the number of functions in the functions file to include in the stats.
-    # This is not a particularly accurate way to count as it's derived from the 
+    with open(packages_file_path, 'r', encoding='utf-8') as packages_file:
+        packages = json.load(packages_file)
+
+    # Count the number of functions to include in the stats.
+    # This is not a particularly accurate way to count as it's derived from the
     # NAMESPACE file, but some packages have a wild card inclusion not an explicit list.
-    with open(functions_file_path, 'r', encoding='utf-8') as functions_file:
-        full_function_file_text = functions_file.read()
-
-        number_of_functions = full_function_file_text.count(",")
+    number_of_packages = len(packages)
+    number_of_functions = 0
+    for package_name, package_info in packages.items():
+        if 'repo' in package_info and 'functions' in package_info['repo']:
+            functions = package_info['repo']['functions']
+            if functions is not None:
+                number_of_functions += len(functions)
 
     with open(html_file_path, 'w', encoding='utf-8') as html_file:
 
@@ -36,9 +57,7 @@ def main(csv_file_path, html_file_path, functions_file_path):
 
         html_file.write(top_content)
 
-        package_info = parse_package_info(csv_file_path)
-
-        stats = f'<p>There are {len(package_info)} packages and {number_of_functions} functions listed on these pages.</p>'
+        stats = f'<p>There are {number_of_packages} packages and {number_of_functions} functions listed on these pages.</p>'
         html_file.write(stats)
 
         html_file.write('<table border="1">\n')
@@ -66,57 +85,59 @@ def main(csv_file_path, html_file_path, functions_file_path):
         unknown_rows_count = 1
 
         #for row in package_list:
-        for this_package_name, this_package_info in package_info.items():
-            print(this_package_name)
-            print(this_package_info)
+        for this_package_name, this_package_info in packages.items():
+            print(f"######\nProcessing package: {this_package_name}")
+            pprint(this_package_info)
             this_row = ""
 
-            # Add GitHub link if available, otherwise just the name
+            # Add anchor
             this_row += '<td class="left"><a href="packages.html#' + this_package_name + '">' + this_package_name + '</a></td>'
 
             # Description
-            if len(this_package_info['short_description']) > 0:
-                this_row += '<td class="left">' + this_package_info['short_description'] + '</td>'
+            if len(this_package_info['input']['description']) > 0:
+                this_row += '<td class="left">' + this_package_info['input']['description'] + '</td>'
             else:
                 this_row += '<td></td>'
 
             # CRAN version with link
-            if len(this_package_info.get('cran_link')) > 0:
-                this_row += '<td><a href="' + this_package_info['cran_link'] + '" target="blank">' + this_package_info['cran_version'] + '</a></td>' 
+            if len(this_package_info['input'].get('cran_link')) > 0:
+                this_row += '<td><a href="' + this_package_info['input']['cran_link'] + '" target="blank">' + this_package_info['cran']['version'] + '</a></td>'
             else:
                 this_row += '<td></td>'
 
-            this_row += '<td>' + this_package_info.get('cran_license', "") + '</td>' # CRAN license
-            this_row += '<td>' + this_package_info.get('github_last_update', "") + '</td>' # GH last update
-            
-                # GH version with link
-            if this_package_info.get('github_version_url') == "null":
+            this_row += '<td>' + str(this_package_info['cran'].get('license', "")) + '</td>' # CRAN license
+            this_row += '<td>' + str(this_package_info['repo'].get('last_commit_date', "")) + '</td>' # GH last update
+
+            # GH version with link
+            if this_package_info['gh_api'].get('release_url') is None:
                 this_row += '<td></td>'
             else:
-                this_row += '<td><a href="' + this_package_info['github_version_url'] + '" target="_blank">' + this_package_info['github_version'] + '</a></td>'
-            
+                this_row += '<td><a href="' + this_package_info['gh_api']['release_url'] + '" target="_blank">' + this_package_info['gh_api']['latest_release'] + '</a></td>'
+
             # GH license
-            if this_package_info.get('github_license') == "null":
-                this_row += '<td></td>'
+            if this_package_info['gh_api'].get('license') is not None and this_package_info['gh_api'].get('license') != "Other":
+                this_row += '<td>' + this_package_info['gh_api'].get('license', "") + '</td>'
+            elif this_package_info['repo'].get('license') is not None:
+                this_row += '<td>' + this_package_info['repo'].get('license', "") + '</td>'
             else:
-                this_row += '<td>' + this_package_info.get('github_license', "") + '</td>'
-            
-            this_row += '<td class="left"><a href="https://github.com/' + this_package_info['github_owner'] + '" target="_blank">' + this_package_info['github_owner'] + '</a></td>' # GH owner
+                this_row += '<td></td>'
+
+            this_row += '<td class="left"><a href="https://github.com/' + this_package_info['gh_api']['owner'] + '" target="_blank">' + this_package_info['gh_api']['owner'] + '</a></td>' # GH owner
 
             # Group rows by status and add put a row number in
-            if this_package_info['status'].strip() == 'production':
+            if this_package_info['input']['status'].strip() == 'production':
                 production_rows += '<tr>'
                 production_rows += '<td>' + str(production_rows_count) + '</td>' # Row number
                 production_rows += this_row
                 production_rows += '</tr>'
                 production_rows_count += 1
-            elif this_package_info['status'].strip() == 'development':
+            elif this_package_info['input']['status'].strip() == 'development':
                 development_rows += '<tr>'
                 development_rows += '<td>' + str(development_rows_count) + '</td>'
                 development_rows += this_row
                 development_rows += '</tr>'
                 development_rows_count += 1
-            elif this_package_info['status'].strip() == 'retired':
+            elif this_package_info['input']['status'].strip() == 'retired':
                 retired_rows += '<tr>'
                 retired_rows += '<td>' + str(retired_rows_count) + '</td>'
                 retired_rows += this_row
@@ -147,5 +168,6 @@ def main(csv_file_path, html_file_path, functions_file_path):
         html_file.write('</body>\n</html>')
 
 if __name__ == '__main__':
-    main('./cache/output.csv', './output/index.html', './cache/functions.txt')
-    shutil.copy('./build_web_pages/template/style_main.css', './output/style_main.css')
+    main('./output/metadata/packages.json', './output/html/index.html')
+    shutil.copy('source/static_html_files/style_main.css', './output/html/style_main.css')
+    shutil.copy('source/static_html_files/faq.html', './output/html/faq.html')

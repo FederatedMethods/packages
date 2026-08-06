@@ -1,4 +1,5 @@
 import os
+from pprint import pprint
 import re
 
 def parse_description_file(file_path):
@@ -34,7 +35,7 @@ def parse_description_file(file_path):
         # Save the last key-value pair
         if current_key:
             parsed_data[current_key] = "\n".join(current_value).strip()
-    print(parsed_data)
+    pprint(parsed_data)
 
     # Parse the Authors@R part if it is present
     if 'Authors@R' in parsed_data:
@@ -52,7 +53,7 @@ def parse_description_file(file_path):
         else:
             authors_string = authors_string.replace("person(", "")
             authors_string = authors_string[:-1]
-        
+
         temp = authors_string.split("),person(")
 
         parsed_data["Authors"] = []
@@ -121,7 +122,7 @@ def main():
     print("############")
 
     print(parsed_data)
-  
+
 
 if __name__ == "__main__":
     main()
