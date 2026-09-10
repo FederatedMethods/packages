@@ -1,7 +1,7 @@
 """
 Function to generate an HTML page listing DataSHIELD packages.
 Olly Butters
-5/8/2026
+10/9/2026
 """
 
 import datetime
@@ -88,6 +88,7 @@ def main(packages_file_path = './output/metadata/packages.json', html_file_path 
                 html_content += f"""
                     <tr><td class="label">CRAN version</td><td class="left">{this_package_info['cran'].get('version', '-')}</td></tr>
                     <tr><td class="label">CRAN licence</td><td class="left">{this_package_info['cran'].get('license', '-')}</td></tr>
+                    <tr><td class="label">GitHub created</td><td class="left">{this_package_info['gh_api'].get('created_at', 'No GitHub creation date available.')}</td></tr>
                     <tr><td class="label">GitHub last update</td><td class="left">{this_package_info['repo'].get('last_commit_date', 'No GitHub last update available.')}</td></tr>
                 """
 

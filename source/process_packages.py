@@ -2,7 +2,7 @@
 Function to process the package list and gather information from GitHub and CRAN, saving in a JSON file.
 If running locally you will need to authenticate with GitHub CLI first using `gh auth login` and have the gh CLI installed.
 Olly Butters
-5/8/2026
+10/9/2026
 """
 
 import os
@@ -49,6 +49,8 @@ def main(clone = False, cache_dir = "cache",delete_cache = False, package_input_
                 "github_link": github_link,
                 "status": status
             }
+
+            #break
 
     pprint(packages)
 
@@ -139,7 +141,7 @@ def main(clone = False, cache_dir = "cache",delete_cache = False, package_input_
         ######################################################
         # Get the GitHub repo information using the GitHub CLI
         os.chdir(github_link_end_part)
-        result = subprocess.run(['gh', 'repo', 'view', '--json', 'codeOfConduct,description,homepageUrl,latestRelease,licenseInfo,owner,parent,updatedAt'], capture_output=True, text=True, check=True)
+        result = subprocess.run(['gh', 'repo', 'view', '--json', 'codeOfConduct,createdAt,description,forkCount,homepageUrl,latestRelease,licenseInfo,owner,parent,stargazerCount,updatedAt,watchers'], capture_output=True, text=True, check=True)
         print(result.stdout)
         os.chdir("..")
         gh_api_info = json.loads(result.stdout)
@@ -148,6 +150,13 @@ def main(clone = False, cache_dir = "cache",delete_cache = False, package_input_
         package_info['gh_api']['code_of_conduct'] = gh_api_info['codeOfConduct'] if 'codeOfConduct' in gh_api_info else None
         package_info['gh_api']['description'] = gh_api_info['description'] if 'description' in gh_api_info else None
         package_info['gh_api']['homepage_url'] = gh_api_info['homepageUrl'] if 'homepageUrl' in gh_api_info else None
+        package_info['gh_api']['created_at'] = gh_api_info['createdAt'] if 'createdAt' in gh_api_info else None
+
+        # Stats
+        package_info['gh_api']['fork_count'] = gh_api_info['forkCount'] if 'forkCount' in gh_api_info else None
+        package_info['gh_api']['stargazer_count'] = gh_api_info['stargazerCount'] if 'stargazerCount' in gh_api_info else None
+
+        package_info['gh_api']['watcher_count'] = gh_api_info['watchers']['totalCount'] if 'watchers' in gh_api_info else None
 
         # Get the latest release information
         if 'latestRelease' in gh_api_info and gh_api_info['latestRelease'] is not None:
@@ -212,5 +221,5 @@ def main(clone = False, cache_dir = "cache",delete_cache = False, package_input_
 
 
 if __name__ == "__main__":
-    main(clone=True, cache_dir="cache")
-    #main(clone=False, cache_dir="cache")
+    #main(clone=True, cache_dir="cache")
+    main(clone=False, cache_dir="cache")
