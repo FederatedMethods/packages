@@ -137,6 +137,8 @@ def main(clone = False, cache_dir = "cache",delete_cache = False, package_input_
                     package_info['repo']['license'] = "Apache"
                 else:
                     package_info['repo']['license'] = "Other"
+        else:
+            print(f"Cloned repo not found: {github_link_end_part}")
 
         ######################################################
         # Get the GitHub repo information using the GitHub CLI
@@ -221,5 +223,5 @@ def main(clone = False, cache_dir = "cache",delete_cache = False, package_input_
 
 
 if __name__ == "__main__":
-    #main(clone=True, cache_dir="cache")
-    main(clone=False, cache_dir="cache")
+    main(clone=True, cache_dir="cache")
+    #main(clone=False, cache_dir="cache")
