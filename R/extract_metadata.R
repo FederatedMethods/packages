@@ -1,6 +1,7 @@
-# Extracts function-level metadata from the R files of existing and named
-# DataSHIELD packages listed in the package list and compiles them into one JSON file.
-# Which metadata is extracted is defined in config/metadata_fields.yml.
+#### Florian Schwarz
+#### Extracts function-level metadata from the R files of existing and named
+#### DataSHIELD packages listed in the package list and compiles them into one JSON file.
+#### Which metadata is extracted is defined in config/metadata_fields.yml.
 
 purrr::walk(list.files("R/utils", pattern = "\\.R$", full.names = TRUE), source)
 
