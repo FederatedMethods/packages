@@ -1,5 +1,11 @@
-# Text after the first match of `pattern`, including the following roxygen
-# lines until the next tag or the end of the roxygen block.
+#' @title Extract the value of a roxygen tag
+#' @description Returns the text after the first match of `pattern`, including
+#'   the following roxygen lines up to the next tag or the end of the block.
+#' @param lines Character vector with the lines of an R file.
+#' @param pattern Regular expression matching the tag.
+#' @return The extracted text as a single string, or `""` if there is no match.
+#' @author Florian Schwarz
+
 extract_value <- function(lines, pattern) {
   pattern_roxygen <- "^\\s*#'"
   pattern_any_tag <- "^\\s*#'\\s*@"

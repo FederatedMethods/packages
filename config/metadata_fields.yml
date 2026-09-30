@@ -12,6 +12,7 @@
 #   description: documentation only, not used in the extraction
 #
 # The first matching line of a file wins for "value" fields.
+# Author: Florian Schwarz
 
 fields:
   - name: title

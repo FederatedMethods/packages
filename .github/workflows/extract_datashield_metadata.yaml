@@ -1,3 +1,8 @@
+# Extracts function-level metadata from the R files of the DataSHIELD packages
+# listed in package_list.csv and commits it as one JSON file.
+# Requires: "Read and write" workflow permissions (Settings -> Actions -> General)
+# Author: Florian Schwarz
+
 name: extract DataSHIELD function metadata
 
 on:

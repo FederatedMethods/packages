@@ -1,4 +1,17 @@
-# Clones a package repository and extracts the fields from each of its R files.
+#' @title Extract the metadata of all functions of a package
+#' @description Shallow-clones the package repository and extracts the
+#'   configured fields from every R file in its `R/` folder. It also checks
+#'   whether a test file in `tests/testthat` mentions the function name.
+#' @param name Package name as given in the package list, used for messages
+#'   and the clone folder.
+#' @param github_link URL of the package's GitHub repository.
+#' @param fields Named list of field definitions from
+#'   `config/metadata_fields.yml`.
+#' @return Tibble with one row per R file: `file`, `package`,
+#'   `function_name`, `test_file` and one column per field. `NULL` if the
+#'   repository cannot be cloned.
+#' @author Florian Schwarz
+
 extract_package <- function(name, github_link, fields) {
   message("Extracting ", name)
   repo <- file.path(tempdir(), name)
