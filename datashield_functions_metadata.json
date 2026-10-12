@@ -8878,6 +8878,17 @@
   },
   {
     "package": "dsOMOP",
+    "function_name": "privacy_release_bindings",
+    "architecture_type": "other",
+    "function_type": "other",
+    "title": "",
+    "description": "",
+    "category": "",
+    "status": "",
+    "test_file": false
+  },
+  {
+    "package": "dsOMOP",
     "function_name": "querylibrary_sticky_catalog",
     "architecture_type": "other",
     "function_type": "other",
