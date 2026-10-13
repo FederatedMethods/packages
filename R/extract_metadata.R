@@ -17,7 +17,7 @@ datashield_functions <- read.delim(config$input$file, sep = config$input$separat
                                    strip.white = TRUE, na.strings = "") |>
   dplyr::filter(!is.na(github_link)) |>
   dplyr::select(name, github_link) |>
-  purrr::pmap(\(name, github_link) tryCatch(extract_package(name, github_link, fields),
+  purrr::pmap(\(name, github_link) tryCatch(extract_package(name, github_link, fields, config$cache$dir),
                                             error = \(e) {
                                               warning("Failed on ", name, ": ", conditionMessage(e))
                                               NULL
