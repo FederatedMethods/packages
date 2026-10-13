@@ -6655,6 +6655,138 @@
     "test_file": false
   },
   {
+    "package": "dsGeospatial",
+    "function_name": "Localmoran",
+    "architecture_type": "other",
+    "function_type": "other",
+    "title": "",
+    "description": "",
+    "category": "",
+    "status": "",
+    "test_file": false
+  },
+  {
+    "package": "dsGeospatial",
+    "function_name": "MeanSdGpDS",
+    "architecture_type": "server",
+    "function_type": "other",
+    "title": "",
+    "description": "",
+    "category": "",
+    "status": "",
+    "test_file": false
+  },
+  {
+    "package": "dsGeospatial",
+    "function_name": "MoransI",
+    "architecture_type": "other",
+    "function_type": "other",
+    "title": "",
+    "description": "",
+    "category": "",
+    "status": "",
+    "test_file": false
+  },
+  {
+    "package": "dsGeospatial",
+    "function_name": "asFactorDS3",
+    "architecture_type": "other",
+    "function_type": "other",
+    "title": "Determines the levels of the input variable in each single study",
+    "description": "This function is an aggregate DataSHIELD function that returns the levels of the input variable from each single study to the client-side function.",
+    "category": "",
+    "status": "",
+    "test_file": false
+  },
+  {
+    "package": "dsGeospatial",
+    "function_name": "groupcorDS",
+    "architecture_type": "server",
+    "function_type": "other",
+    "title": "",
+    "description": "",
+    "category": "",
+    "status": "",
+    "test_file": false
+  },
+  {
+    "package": "dsGeospatialClient",
+    "function_name": "ds.chisqr",
+    "architecture_type": "client",
+    "function_type": "aggregate",
+    "title": "",
+    "description": "Calculates Pearson's chi-squared tests for two categorical variables separately across the levels of a third grouping variable. The analysis can be performed separately for each DataSHIELD datasource or after combining contingency-table counts across datasources. Optionally, when the grouping variable contains 2011 LSOA codes, the chi-squared statistics can be joined to LSOA boundary data and returned as spatial data or plotted as maps.",
+    "category": "",
+    "status": "",
+    "test_file": false
+  },
+  {
+    "package": "dsGeospatialClient",
+    "function_name": "ds.geoheatmapPlot",
+    "architecture_type": "client",
+    "function_type": "aggregate",
+    "title": "Plot a geographic heatmap",
+    "description": "Creates a geographic heatmap showing the group-wise mean of a numeric variable across Lower Layer Super Output Areas (LSOAs).",
+    "category": "",
+    "status": "",
+    "test_file": false
+  },
+  {
+    "package": "dsGeospatialClient",
+    "function_name": "ds.groupcor",
+    "architecture_type": "client",
+    "function_type": "aggregate",
+    "title": "Calculates the correlation of R objects in the server-side",
+    "description": "This function calculates the correlation of two variables or the correlation matrix for the variables of an input data frame.",
+    "category": "",
+    "status": "",
+    "test_file": false
+  },
+  {
+    "package": "dsGeospatialClient",
+    "function_name": "ds.lagsarlm",
+    "architecture_type": "client",
+    "function_type": "hybrid",
+    "title": "",
+    "description": "",
+    "category": "",
+    "status": "",
+    "test_file": false
+  },
+  {
+    "package": "dsGeospatialClient",
+    "function_name": "ds.localmoran",
+    "architecture_type": "client",
+    "function_type": "hybrid",
+    "title": "",
+    "description": "",
+    "category": "",
+    "status": "",
+    "test_file": false
+  },
+  {
+    "package": "dsGeospatialClient",
+    "function_name": "ds.moransI",
+    "architecture_type": "client",
+    "function_type": "hybrid",
+    "title": "",
+    "description": "",
+    "category": "",
+    "status": "",
+    "test_file": false
+  },
+  {
+    "package": "dsGeospatialClient",
+    "function_name": "ds.summarystat",
+    "architecture_type": "client",
+    "function_type": "aggregate",
+    "title": "Computes the mean and standard deviation across groups defined by one factor",
+    "description": "This function calculates the mean and SD of a continuous variable for each class of a single factor.",
+    "category": "",
+    "status": "",
+    "test_file": false
+  },
+  {
     "package": "dsHPC",
     "function_name": "api_plugins",
     "architecture_type": "other",
