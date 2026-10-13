@@ -10,6 +10,7 @@ import csv
 import json
 import re
 from pprint import pprint
+from pathlib import Path
 import shutil
 import subprocess
 import urllib.request as urllib2
@@ -139,6 +140,17 @@ def main(clone = False, cache_dir = "cache",delete_cache = False, package_input_
                     package_info['repo']['license'] = "Other"
         else:
             print(f"Cloned repo not found: {github_link_end_part}")
+
+        ######################################################
+        # Run the R code to extract function info
+        os.chdir("..")
+        print(os.getcwd())
+        if not os.path.exists('R/extract_package_metadata.R'):
+            print("R script not found: R/extract_package_metadata.R")
+        result = subprocess.run(['C:/Program Files/R/R-4.4.1/bin/Rscript.exe', 'R/extract_package_metadata.R', package_name], capture_output=True, text=True)
+        print(result.stdout)
+        package_info['repo']['function_info'] = result.stdout
+        os.chdir(cache_dir)
 
         ######################################################
         # Get the GitHub repo information using the GitHub CLI
