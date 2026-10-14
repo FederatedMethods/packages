@@ -142,14 +142,24 @@ def main(clone = False, cache_dir = "cache",delete_cache = False, package_input_
             print(f"Cloned repo not found: {github_link_end_part}")
 
         ######################################################
-        # Run the R code to extract function info
+        # Run Florian's R code to extract function info
         os.chdir("..")
         print(os.getcwd())
-        if not os.path.exists('R/extract_package_metadata.R'):
-            print("R script not found: R/extract_package_metadata.R")
-        result = subprocess.run(['C:/Program Files/R/R-4.4.1/bin/Rscript.exe', 'R/extract_package_metadata.R', package_name], capture_output=True, text=True)
-        print(result.stdout)
-        package_info['repo']['function_info'] = result.stdout
+        try:
+            if not os.path.exists('R/extract_package_metadata.R'):
+                print("R script not found: R/extract_package_metadata.R")
+            
+            if os.name == 'nt':
+                result = subprocess.run(['C:/Program Files/R/R-4.4.1/bin/Rscript.exe', 'R/extract_package_metadata.R', package_name], capture_output=True, text=True)
+            else:
+                result = subprocess.run(['Rscript', 'R/extract_package_metadata.R', package_name], capture_output=True, text=True)
+
+            print(result.stdout)
+            
+            package_info['repo']['function_info'] = json.loads(result.stdout)
+        except Exception as e:
+            print(f"Error occurred while running R script: {e}")
+            package_info['repo']['function_info'] = 'Error'
         os.chdir(cache_dir)
 
         ######################################################
