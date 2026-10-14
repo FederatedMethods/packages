@@ -72,3 +72,7 @@ input:
 # Output
 output:
   file: datashield_functions_metadata.json
+
+# Location of the cache directory
+cache:
+  dir: cache

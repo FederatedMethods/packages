@@ -12,17 +12,23 @@
 #'   repository cannot be cloned.
 #' @author Florian Schwarz
 
-extract_package <- function(name, github_link, fields) {
+extract_package <- function(name, github_link, fields, cache_dir) {
   message("Extracting ", name)
-  repo <- file.path(tempdir(), name)
-  if (system2("git", c("clone", "--quiet", "--depth", "1", github_link, repo)) != 0) {
-    warning("Could not clone ", github_link, ", skipping ", name)
-    return(NULL)
-  }
-  test_files <- list.files(file.path(repo, "tests", "testthat")) |> stringr::str_c(collapse = ", ")
 
-  package_functions <- dplyr::tibble(file = list.files(file.path(repo, "R"), pattern = "\\.[Rr]$", full.names = TRUE)) |>
-    dplyr::mutate(package = read.dcf(file.path(repo, "DESCRIPTION"), fields = "Package")[1, 1],
+  repo_path <- file.path(cache_dir, name)
+    
+  #check if cache directory exists, if not create it
+  if (!dir.exists(repo_path)) {
+    if (system2("git", c("clone", "--quiet", "--depth", "1", github_link, repo_path)) != 0) {
+      warning("Could not clone ", github_link, ", skipping ", name)
+      return(NULL)
+    }
+  }
+    
+  test_files <- list.files(file.path(repo_path, "tests", "testthat")) |> stringr::str_c(collapse = ", ")
+
+  package_functions <- dplyr::tibble(file = list.files(file.path(repo_path, "R"), pattern = "\\.[Rr]$", full.names = TRUE)) |>
+    dplyr::mutate(package = read.dcf(file.path(repo_path, "DESCRIPTION"), fields = "Package")[1, 1],
                   function_name = stringr::str_remove(basename(file), "\\.[Rr]$"),
                   test_file = stringr::str_detect(test_files, stringr::fixed(function_name)),
                   metadata = purrr::map(file, extract_fields, fields = fields)) |>
