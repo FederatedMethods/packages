@@ -22,6 +22,8 @@ dsDid | Difference-in-Differences package |  https://github.com/manuhuth/dsDid |
 dsDidClient | Difference-in-Differences package |  https://github.com/manuhuth/dsDidClient | |
 dsExposome | Exposome package | https://github.com/isglobal-brge/dsExposome | | production
 dsExposomeClient | Exposome package | https://github.com/isglobal-brge/dsExposomeClient | | production
+dsFedAte | Federated estimation of the average treatment effect (ATE) | https://github.com/FranciscoAndrade90/dsFedAte | https://cran.r-project.org/package=dsFedAte | development 
+dsFedAteClient | Federated estimation of the average treatment effect (ATE) | https://github.com/FranciscoAndrade90/dsFedAteClient | | development 
 dsFlower | flower.ai federated learning package | https://github.com/isglobal-brge/dsFlower | | development
 dsFlowerClient | flower.ai federated learning package | https://github.com/isglobal-brge/dsFlowerClient | | development
 dsFreda | Data augmentation package | https://github.com/BastianReiter/dsFreda | | production
