@@ -41,4 +41,7 @@ def extract_fields(file_path, fields):
             values[field_name] = extract_value(lines, pattern)
         else:
             raise ValueError(f"Unsupported extraction type: {extract_mode!r}")
+
+    values["lines_of_code"] = sum(1 for line in lines)
+    
     return values

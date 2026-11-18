@@ -46,7 +46,7 @@ def main(packages_file_path = './output/metadata/packages.json', html_file_path 
         # Put html together for this page
         head = '<!DOCTYPE html><html lang="en-GB">'
         head += '<head>'
-        head += '<title>DataSHIELD packages</title>'
+        head += '<title>DataSHIELD community packages</title>'
         head += '<meta charset="UTF-8">'
         head += '<link rel="stylesheet" href="./style_main.css">'
         head += '</head>'
@@ -55,8 +55,8 @@ def main(packages_file_path = './output/metadata/packages.json', html_file_path 
         html_file.write(head)
 
         top_content = '<div class="top-content">'
-        top_content += '<h1>DataSHIELD packages</h1><a href="#top"></a>'
-        top_content += '<p>This page lists all the packages that have been developed in the <a href="https://www.datashield.org">DataSHIELD</a> ecosystem. It includes packages that are in production, in development, retired, and unknown status. More info is in the <a href="./faq.html">FAQ</a>.</p>'
+        top_content += '<h1>DataSHIELD community packages</h1><a href="#top"></a>'
+        top_content += '<p>This page lists all the packages that have been developed in the <a href="https://www.datashield.org">DataSHIELD</a> community. It includes packages that are in production, in development, retired, and unknown status. More info is in the <a href="./faq.html">FAQ</a>.</p>'
 
         html_file.write(top_content)
 

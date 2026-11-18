@@ -18,6 +18,7 @@ sys.path.insert(0, str(SOURCE_DIR))
 import build_packages_summary_page
 import build_packages_long_page
 import build_functions_page
+import build_stats_page
 
 # Static files copied into the HTML output directory
 STATIC_FILES = ["style_main.css", "faq.html"]
@@ -43,6 +44,7 @@ def main(packages_file_path='./output/metadata/packages.json', html_dir='./outpu
     build_packages_summary_page.main(packages_file_path, f'{html_dir}/index.html')
     build_packages_long_page.main(packages_file_path, f'{html_dir}/packages.html')
     build_functions_page.main(packages_file_path, f'{html_dir}/functions.html')
+    build_stats_page.main(packages_file_path, f'{html_dir}/stats.html')
 
     print("All pages built.")
 

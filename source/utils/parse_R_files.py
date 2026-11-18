@@ -74,7 +74,6 @@ def parse_R_files(package_name=None, github_link_end_part=None):
 
         row["function_type"] = function_type
 
-
         functions_metadata.append(row)
 
     return functions_metadata

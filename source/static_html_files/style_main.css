@@ -343,3 +343,89 @@ hr {
   background-color:#dedcd2;
 }
 
+
+
+/* ==== TIMELINE ==== */
+table td.timeline-cell {
+  width: 80%;
+  padding: 4px 8px;
+}
+
+.timeline-axis {
+  position: relative;
+  height: 1.5em;
+}
+
+.timeline-tick {
+  position: absolute;
+  top: 0;
+  font-size: 12px;
+  font-weight: bold;
+  transform: translateX(-50%);
+}
+
+.timeline-track {
+  position: relative;
+  height: 14px;
+  background: #e6e6e6;
+}
+
+.timeline-bar {
+  position: absolute;
+  top: 0;
+  height: 14px;
+  background: #777777;
+}
+
+.timeline-production  { background: #193E72; }
+.timeline-development { background: #4f9d69; }
+.timeline-retired     { background: #B01C2E; }
+.timeline-unknown     { background: #999999; }
+
+.timeline-key {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  margin-left: 1em;
+  vertical-align: middle;
+}
+
+/* ==== ACTIVE PACKAGES PER YEAR PLOT ==== */
+.yearplot {
+  display: flex;
+  align-items: flex-end;
+  gap: 6px;
+  height: 260px;
+  margin-bottom: 1.5em;
+  border-bottom: 1px solid #333333;
+}
+
+.yearplot-col {
+  flex: 1;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  position: relative;
+}
+
+.yearplot-bar {
+  width: 100%;
+  background: #193E72;
+}
+
+.yearplot-count {
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.yearplot-year {
+  position: absolute;
+  bottom: -1.6em;
+  font-size: 12px;
+}
+
+.yearplot {
+  margin-bottom: 3em;
+}

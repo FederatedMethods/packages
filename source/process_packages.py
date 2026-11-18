@@ -110,6 +110,15 @@ def main(clone = False, cache_dir = "cache",delete_cache = False, package_input_
                 print(f"Error getting last commit date for package {github_link_end_part}: {e}")
                 package_info['repo']['last_commit_date'] = None
 
+            # Get the total number of commits in the repo
+            try:
+                total_commits = subprocess.run(['git', '-C', github_link_end_part, 'rev-list', '--count', '--all'], capture_output=True, text=True, check=True).stdout.strip()
+                print(f"Repo total commits: {total_commits}")
+                package_info['repo']['total_commits'] = int(total_commits)
+            except Exception as e:
+                print(f"Error getting total commits for package {github_link_end_part}: {e}")
+                package_info['repo']['total_commits'] = None
+
             # If there is a NAMESPACE file then parse it to get the function input
             if os.path.exists(github_link_end_part + "/NAMESPACE"):
                 print("NAMESPACE file found")

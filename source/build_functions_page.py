@@ -67,7 +67,7 @@ def main(packages_file_path = './output/metadata/packages.json', html_file_path 
         # Put html together for this page
         head = '<!DOCTYPE html><html lang="en-GB">'
         head += '<head>'
-        head += '<title>DataSHIELD functions</title>'
+        head += '<title>DataSHIELD community package functions</title>'
         head += '<meta charset="UTF-8">'
         head += '<link rel="stylesheet" href="./style_main.css">'
         head += '</head>'
@@ -76,8 +76,8 @@ def main(packages_file_path = './output/metadata/packages.json', html_file_path 
         html_file.write(head)
 
         top_content = '<div class="top-content" id="top">'
-        top_content += '<h1>DataSHIELD functions</h1><a href="#top"></a>'
-        top_content += '<p>This page lists all the functions and their metadata for packages that have been developed in the <a href="https://www.datashield.org">DataSHIELD</a> ecosystem. It includes packages that are in production, in development, retired, and unknown status. More info is in the <a href="./faq.html">FAQ</a>. If you want to find a specific type of analysis then just search on this page (Ctrl+F) for some relevant keywords.</p>'
+        top_content += '<h1>DataSHIELD community package functions</h1><a href="#top"></a>'
+        top_content += '<p>This page lists all the functions and their metadata for packages that have been developed in the <a href="https://www.datashield.org">DataSHIELD</a> community. It includes packages that are in production, in development, retired, and unknown status. More info is in the <a href="./faq.html">FAQ</a>. If you want to find a specific type of analysis then just search on this page (Ctrl+F) for some relevant keywords.</p>'
 
         html_file.write(top_content)
 
