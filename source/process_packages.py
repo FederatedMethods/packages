@@ -15,7 +15,9 @@ from pathlib import Path
 import shutil
 import subprocess
 import urllib.request as urllib2
-from parse_DESCRIPTION_file import parse_description_file
+from utils.parse_DESCRIPTION_file import parse_description_file
+from utils.parse_R_files import parse_R_files
+from utils.helper_parse_R_files import extract_fields
 
 
 def main(clone = False, cache_dir = "cache",delete_cache = False, package_input_file = "package_list.csv"):
@@ -27,6 +29,9 @@ def main(clone = False, cache_dir = "cache",delete_cache = False, package_input_
         delete_cache (bool): Whether to delete the cache directory before processing. Default is False.
         package_input_file (str): Path to the CSV file containing package information. Default is "package_list.csv".
     """
+
+    project_root = Path(__file__).resolve().parent
+
 
     packages = {}
 
@@ -143,25 +148,13 @@ def main(clone = False, cache_dir = "cache",delete_cache = False, package_input_
             print(f"Cloned repo not found: {github_link_end_part}")
 
         ######################################################
-        # Run the Python metadata extraction equivalent of the original R code
-        project_root = Path(__file__).resolve().parent.parent
-        script_path = project_root / 'source' / 'extract_package_metadata.py'
-        os.chdir(project_root)
-        print(os.getcwd())
+        # Parse the R files in the cloned repo to get function metadata
         try:
-            if not script_path.exists():
-                print(f"Python script not found: {script_path}")
-
-            result = subprocess.run([sys.executable, str(script_path), package_name], capture_output=True, text=True, check=False)
-            print(result.stdout)
-            if result.stdout.strip():
-                package_info['repo']['function_info'] = json.loads(result.stdout)
-            else:
-                package_info['repo']['function_info'] = []
+            package_info['repo']['function_info'] = parse_R_files(package_name, github_link_end_part)
         except Exception as e:
             print(f"Error occurred while running Python metadata script: {e}")
             package_info['repo']['function_info'] = 'Error'
-        os.chdir(cache_dir)
+
         ######################################################
         # Get the GitHub repo information using the GitHub CLI
         os.chdir(github_link_end_part)
