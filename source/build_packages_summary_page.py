@@ -33,8 +33,8 @@ def main(packages_file_path = './output/metadata/packages.json', html_file_path 
     number_of_packages = len(packages)
     number_of_functions = 0
     for package_name, package_info in packages.items():
-        if 'repo' in package_info and 'functions' in package_info['repo']:
-            functions = package_info['repo']['functions']
+        if 'repo' in package_info and 'functions_from_NAMESPACE' in package_info['repo']:
+            functions = package_info['repo']['functions_from_NAMESPACE']
             if functions is not None:
                 number_of_functions += len(functions)
 

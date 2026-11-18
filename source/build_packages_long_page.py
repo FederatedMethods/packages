@@ -35,8 +35,8 @@ def main(packages_file_path = './output/metadata/packages.json', html_file_path 
     number_of_packages = len(packages)
     number_of_functions = 0
     for package_name, package_info in packages.items():
-        if 'repo' in package_info and 'functions' in package_info['repo']:
-            functions = package_info['repo']['functions']
+        if 'repo' in package_info and 'functions_from_NAMESPACE' in package_info['repo']:
+            functions = package_info['repo']['functions_from_NAMESPACE']
             if functions is not None:
                 number_of_functions += len(functions)
 
@@ -131,10 +131,14 @@ def main(packages_file_path = './output/metadata/packages.json', html_file_path 
                     html_content += '<tr><td class="label">Maintainer</td><td class="left"></td></tr>'
 
                 html_content += f"""
-                    <tr><td class="label">Functions</td><td class="left">{', '.join(this_package_info['repo'].get('functions', [])) if 'functions' in this_package_info['repo'] else 'No functions listed.'}</td></tr>
-                </table>
-                <p style="text-align:right"><a href=#top>Jump to top of page</a></p>
-                """
+                    <tr><td class="label">Functions</td><td class="left">{', '.join(this_package_info['repo'].get('functions_from_NAMESPACE', [])) if 'functions_from_NAMESPACE' in this_package_info['repo'] else 'No functions listed.'}</td></tr>
+                    """
+
+                html_content += "<tr><td class='label'>Function metadata</td><td class='left'><a href='functions.html#" + this_package_name + "'>See function metadata</a></td></tr>"
+
+                html_content += '</table>'
+
+                html_content += '<p style="text-align:right"><a href=#top>Jump to top of page</a></p>'
 
                 html_file.write(html_content)
             except Exception as e:

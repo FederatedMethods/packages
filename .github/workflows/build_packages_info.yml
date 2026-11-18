@@ -41,8 +41,7 @@ jobs:
       # Parse the output JSON file and generate HTML pages
       - name: build html page
         run: |
-          python3 source/build_packages_summary_page.py
-          python3 source/build_packages_long_page.py
+          python3 source/build_all_pages.py
           mkdir gh-pages
           mv output/html/* gh-pages/
           mv output/metadata/packages.json gh-pages/

@@ -116,10 +116,10 @@ def main(clone = False, cache_dir = "cache",delete_cache = False, package_input_
                 with open(github_link_end_part + "/NAMESPACE", "r", encoding="utf-8") as namespace_file:
                     gh_functions = re.findall(r'export\((.*?)\)', namespace_file.read())
                     print(f"Repo functions: {gh_functions}")
-                    package_info['repo']['functions'] = gh_functions
+                    package_info['repo']['functions_from_NAMESPACE'] = gh_functions
             else:
                 print("NAMESPACE file not found")
-                package_info['repo']['functions'] = None
+                package_info['repo']['functions_from_NAMESPACE'] = None
 
             # Get the LICENSE file in the repo and parse it to get the license type
             if os.path.exists(github_link_end_part + "/LICENSE.md"):
