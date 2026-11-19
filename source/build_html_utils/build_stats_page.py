@@ -6,6 +6,10 @@ Olly Butters
 """
 
 import datetime
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+from build_html_utils.navbar import get_navbar
 import html
 import json
 import os
@@ -46,7 +50,7 @@ def main(packages_file_path='./output/metadata/packages.json', html_file_path='.
         head += '<meta charset="UTF-8">'
         head += '<link rel="stylesheet" href="./style_main.css">'
         head += '</head>'
-        head += '<body>'
+        head += '<body>' + get_navbar('stats.html')
         html_file.write(head)
 
         top_content = '<div class="top-content" id="top">'
@@ -78,8 +82,8 @@ def main(packages_file_path='./output/metadata/packages.json', html_file_path='.
 
         # Nuber of commits (summed from the total_commits in repo)
         total_commits = sum(info.get('repo', {}).get('total_commits') or 0 for info in packages.values())
-        
-        html_file.write(f'<p> There are <strong>{len(packages)}</strong> packages developed by the DataSHIELD community, with <strong>{total_functions}</strong> functions spread over <strong>{total_lines_of_code:,}</strong> lines of source code from <strong>{total_commits:,}</strong> commits. These packages have <strong>{total_forks}</strong> forks, <strong>{total_stars}</strong> stars and <strong>{total_watchers}</strong> watchers between them on GitHub. The timeline below shows the development history of these packages, from when they were first created to their most recent commit, going all the way back to 2013 when DataSHIELD was first conceived.</p>')
+
+        html_file.write(f'<p> There are <strong>{len(packages)}</strong> packages developed by the DataSHIELD community, with <strong>{total_functions}</strong> functions spread over <strong>{total_lines_of_code:,}</strong> lines of source code from <strong>{total_commits:,}</strong> commits. These packages have <strong>{total_forks}</strong> forks, <strong>{total_stars}</strong> stars and <strong>{total_watchers}</strong> watchers between them on GitHub. The timeline below shows the development history of these packages, from when they were first created to their most recent commit, going all the way back to the first commit in dsBase in 2013.</p>')
 
         ########################################################################################
         # Timeline
@@ -181,5 +185,5 @@ def main(packages_file_path='./output/metadata/packages.json', html_file_path='.
 
 if __name__ == '__main__':
     main('./output/metadata/packages.json', './output/html/stats.html')
-    shutil.copy('source/static_html_files/style_main.css', './output/html/style_main.css')
-    shutil.copy('source/static_html_files/faq.html', './output/html/faq.html')
+    shutil.copy('source/build_html_utils/static_html_files/style_main.css', './output/html/style_main.css')
+    shutil.copy('source/build_html_utils/static_html_files/faq.html', './output/html/faq.html')

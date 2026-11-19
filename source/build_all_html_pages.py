@@ -11,14 +11,14 @@ from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 SOURCE_DIR = PROJECT_ROOT / "source"
-STATIC_DIR = SOURCE_DIR / "static_html_files"
+STATIC_DIR = SOURCE_DIR / "build_html_utils" / "static_html_files"
 
 sys.path.insert(0, str(SOURCE_DIR))
 
-import build_packages_summary_page
-import build_packages_long_page
-import build_functions_page
-import build_stats_page
+from build_html_utils import build_packages_summary_page
+from build_html_utils import build_packages_long_page
+from build_html_utils import build_functions_page
+from build_html_utils import build_stats_page
 
 # Static files copied into the HTML output directory
 STATIC_FILES = ["style_main.css", "faq.html"]

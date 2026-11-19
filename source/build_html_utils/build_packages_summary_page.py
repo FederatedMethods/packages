@@ -5,6 +5,10 @@ Olly Butters
 """
 
 import datetime
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+from build_html_utils.navbar import get_navbar
 import json
 import shutil
 import os
@@ -32,7 +36,7 @@ def main(packages_file_path = './output/metadata/packages.json', html_file_path 
     # NAMESPACE file, but some packages have a wild card inclusion not an explicit list.
     number_of_packages = len(packages)
     number_of_functions = 0
-    for package_name, package_info in packages.items():
+    for package_info in packages.values():
         if 'repo' in package_info and 'functions_from_NAMESPACE' in package_info['repo']:
             functions = package_info['repo']['functions_from_NAMESPACE']
             if functions is not None:
@@ -47,7 +51,7 @@ def main(packages_file_path = './output/metadata/packages.json', html_file_path 
         head += '<meta charset="UTF-8">'
         head += '<link rel="stylesheet" href="./style_main.css">'
         head += '</head>'
-        head += '<body>'
+        head += '<body>' + get_navbar('index.html')
 
         html_file.write(head)
 
@@ -169,5 +173,5 @@ def main(packages_file_path = './output/metadata/packages.json', html_file_path 
 
 if __name__ == '__main__':
     main('./output/metadata/packages.json', './output/html/index.html')
-    shutil.copy('source/static_html_files/style_main.css', './output/html/style_main.css')
-    shutil.copy('source/static_html_files/faq.html', './output/html/faq.html')
+    shutil.copy('source/build_html_utils/static_html_files/style_main.css', './output/html/style_main.css')
+    shutil.copy('source/build_html_utils/static_html_files/faq.html', './output/html/faq.html')

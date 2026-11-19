@@ -8,9 +8,12 @@ import datetime
 import html
 import json
 import os
+from pathlib import Path
 from pprint import pprint
 import shutil
-
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+from build_html_utils.navbar import get_navbar
 
 def format_metadata_value(value, default = '-'):
     """Format a metadata value for safe display in an HTML table cell."""
@@ -49,7 +52,7 @@ def main(packages_file_path = './output/metadata/packages.json', html_file_path 
     number_of_functions = 0
     include_exported = False
 
-    for package_name, package_info in packages.items():
+    for package_info in packages.values():
         repo_info = package_info.get('repo', {})
         if isinstance(repo_info, dict):
             function_info = repo_info.get('function_info')
@@ -71,7 +74,7 @@ def main(packages_file_path = './output/metadata/packages.json', html_file_path 
         head += '<meta charset="UTF-8">'
         head += '<link rel="stylesheet" href="./style_main.css">'
         head += '</head>'
-        head += '<body>'
+        head += '<body>' + get_navbar('functions.html')
 
         html_file.write(head)
 
@@ -140,4 +143,4 @@ def main(packages_file_path = './output/metadata/packages.json', html_file_path 
 
 if __name__ == '__main__':
     main('./output/metadata/packages.json', './output/html/functions.html')
-    shutil.copy('source/static_html_files/style_main.css', './output/html/style_main.css')
+    shutil.copy('source/build_html_utils/static_html_files/style_main.css', './output/html/style_main.css')

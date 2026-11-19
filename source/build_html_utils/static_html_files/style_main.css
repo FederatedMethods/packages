@@ -429,3 +429,32 @@ table td.timeline-cell {
 .yearplot {
   margin-bottom: 3em;
 }
+
+/* ==== NAVIGATION BAR ==== */
+.navbar {
+  display: flex;
+  gap: 4px;
+  margin: 0 -5px 1em -5px;
+  padding: 0 5px;
+  background: #193E72;
+  border-bottom: 3px solid #B01C2E;
+}
+
+.navbar a:link,
+.navbar a:visited {
+  color: #FFFFFF;
+  text-decoration: none;
+  padding: 10px 16px;
+  font-size: 15px;
+}
+
+.navbar a:hover,
+.navbar a:focus {
+  background: #2c5a9b;
+  text-decoration: none;
+}
+
+.navbar a.active {
+  background: #B01C2E;
+  font-weight: bold;
+}

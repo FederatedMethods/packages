@@ -9,15 +9,12 @@ import os
 import csv
 import json
 import re
-import sys
 from pprint import pprint
-from pathlib import Path
 import shutil
 import subprocess
 import urllib.request as urllib2
-from utils.parse_DESCRIPTION_file import parse_description_file
-from utils.parse_R_files import parse_R_files
-from utils.helper_parse_R_files import extract_fields
+from build_metadata_utils.parse_DESCRIPTION_file import parse_description_file
+from build_metadata_utils.parse_R_files import parse_R_files
 
 
 def main(clone = False, cache_dir = "cache",delete_cache = False, package_input_file = "package_list.csv"):
@@ -30,8 +27,7 @@ def main(clone = False, cache_dir = "cache",delete_cache = False, package_input_
         package_input_file (str): Path to the CSV file containing package information. Default is "package_list.csv".
     """
 
-    project_root = Path(__file__).resolve().parent
-
+    #project_root = Path(__file__).resolve().parent
 
     packages = {}
 
@@ -103,7 +99,7 @@ def main(clone = False, cache_dir = "cache",delete_cache = False, package_input_
 
             # Get the last commit date
             try:
-                last_commit_date = subprocess.run(['git', '-C', github_link_end_part, 'log', '-1', '--pretty=format:%cs'], capture_output=True, text=True, check=True).stdout.strip()
+                last_commit_date = subprocess.run(['git', '-C', github_link_end_part, 'log', '-1', '--all', '--pretty=format:%cs'], capture_output=True, text=True, check=True).stdout.strip()
                 print(f"Repo last commit date: {last_commit_date}")
                 package_info['repo']['last_commit_date'] = last_commit_date
             except Exception as e:
