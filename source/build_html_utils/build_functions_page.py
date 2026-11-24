@@ -171,7 +171,6 @@ def main(packages_file_path = './output/metadata/packages.json', html_file_path 
                     html_content += '<th>Function name</th>'
                     html_content += '<th>Title</th>'
                     html_content += '<th>Description</th>'
-                    html_content += '<th>Exported</th>'
                     html_content += '</tr>\n'
 
                     for func in function_rows:
@@ -184,7 +183,6 @@ def main(packages_file_path = './output/metadata/packages.json', html_file_path 
                         html_content += f'<td class="left">{function_name}</td>'
                         html_content += f'<td class="left">{title}</td>'
                         html_content += f'<td class="left">{description}</td>'
-                        html_content += f'<td>{exported}</td>'
                         html_content += '</tr>\n'
 
                     html_content += '</table>\n'
