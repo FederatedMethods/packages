@@ -38,12 +38,7 @@ def main(packages_file_path = './output/metadata/packages.json', html_file_path 
     # This is not a particularly accurate way to count as it's derived from the
     # NAMESPACE file, but some packages have a wild card inclusion not an explicit list.
     number_of_packages = len(packages)
-    number_of_functions = 0
-    for package_info in packages.values():
-        if 'repo' in package_info and 'functions_from_NAMESPACE' in package_info['repo']:
-            functions = package_info['repo']['functions_from_NAMESPACE']
-            if functions is not None:
-                number_of_functions += len(functions)
+    number_of_functions = sum(len(info.get('repo', {}).get('functions_exported_in_NAMESPACE') or []) for info in packages.values())
 
     # Generate the HTML page
     with open(html_file_path, 'w', encoding='utf-8') as html_file:
