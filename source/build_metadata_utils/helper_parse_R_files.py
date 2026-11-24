@@ -45,3 +45,46 @@ def extract_fields(file_path, fields):
     values["lines_of_code"] = sum(1 for line in lines)
     
     return values
+
+def parse_roxygen_blocks(r_source: str) -> list[dict]:
+    """Extract all #' roxygen blocks (including arbitrary custom @tags) from an R file."""
+    # Remove empty lines before parsing so blank lines inside or after a roxygen header don't matter
+    lines = [line for line in r_source.splitlines() if line.strip()]
+    blocks = []
+    i = 0
+    while i < len(lines):
+        if lines[i].lstrip().startswith("#'"):
+            comment_lines = []
+            while i < len(lines) and lines[i].lstrip().startswith("#'"):
+                comment_lines.append(re.sub(r"^\s*#'\s?", "", lines[i]))
+                i += 1
+            
+            # Grab the function name from the next line of code. Skip blank lines and plain
+            # "#" comment lines (e.g. separator lines like #~~~~) that sit between the #' block
+            # and the function definition. A new #' block means this block has no function.
+            while i < len(lines):
+                stripped = lines[i].strip()
+                if not stripped or (stripped.startswith("#") and not stripped.startswith("#'")):
+                    i += 1
+                else:
+                    break
+            fn_match = re.match(r"^\s*([`.\w]+)\s*(?:<-|=)\s*function\b", lines[i]) if i < len(lines) else None
+            fn_name = fn_match.group(1).strip("`") if fn_match else None
+            # Split comment lines into raw @tag -> [values]
+            tags = {}
+            current_tag = "_intro"  # title/description before the first @tag
+            buf = []
+            for cl in comment_lines:
+                m = re.match(r"^@([A-Za-z][A-Za-z0-9_]*)\b\s*(.*)", cl)
+                if m:
+                    if buf:
+                        tags.setdefault(current_tag, []).append("\n".join(buf).strip())
+                    current_tag, buf = m.group(1), [m.group(2)]
+                else:
+                    buf.append(cl)
+            if buf:
+                tags.setdefault(current_tag, []).append("\n".join(buf).strip())
+            blocks.append({"function": fn_name, "tags": tags})
+        else:
+            i += 1
+    return blocks

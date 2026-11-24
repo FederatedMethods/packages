@@ -27,6 +27,78 @@ def format_metadata_value(value, default = '-'):
     return html.escape(text)
 
 
+def clean_text(text):
+    """Collapse all whitespace (including newlines) into single spaces."""
+    return ' '.join(str(text).split())
+
+
+def first_tag_value(tags, tag_name):
+    """Return the cleaned text of the first value of a roxygen tag, or '' if it is missing/empty."""
+    values = tags.get(tag_name) or []
+    return clean_text(values[0]) if values else ''
+
+
+def get_function_rows(repo_info):
+    """
+    Build the rows of function metadata for a package from repo['function_info']['roxygen_tags'].
+    Each roxygen entry has a 'function' name and a 'tags' dict of lists of strings. Entries
+    without a function name cannot be attributed to a function so are skipped.
+    Title and description come from the @title and @description tags. If there is no @title tag
+    then the first paragraph of the untagged introduction ('_intro') is used as the title, and
+    the remaining paragraphs are used as the description if there is no @description tag.
+    Returns a list of dicts with function_name, title, description and exported.
+    """
+    function_info = repo_info.get('function_info')
+    if not isinstance(function_info, dict):
+        return []
+    roxygen_tags = function_info.get('roxygen_tags')
+    if not isinstance(roxygen_tags, list):
+        return []
+
+    exported_in_namespace = set(repo_info.get('functions_exported_in_NAMESPACE') or [])
+    exported_wildcard_in_namespace = bool(repo_info.get('functions_exportPattern_in_NAMESPACE') or False)
+
+    rows = []
+    for entry in roxygen_tags:
+        if not isinstance(entry, dict) or not entry.get('function'):
+            continue
+
+        # If the NAMESPACE has a wildcard export, then all functions are considered exported
+        # Otherwise, only functions explicitly listed in the NAMESPACE are considered exported
+        if exported_wildcard_in_namespace:
+            exported = True
+        else:
+            if entry.get('function') not in exported_in_namespace:
+                continue  # Skip functions that are not exported in the NAMESPACE
+
+        tags = entry.get('tags') or {}
+
+        title = first_tag_value(tags, 'title')
+        description = first_tag_value(tags, 'description')
+
+        intro_values = tags.get('_intro') or []
+        if intro_values and (not title or not description):
+            intro = str(intro_values[0]).strip()
+            if intro.startswith('@title'):
+                intro = intro[len('@title'):].strip()
+            paragraphs = [clean_text(p) for p in intro.split('\n\n') if p.strip()]
+            if paragraphs:
+                if not title:
+                    title = paragraphs[0]
+                    if not description:
+                        description = ' '.join(paragraphs[1:])
+                elif not description:
+                    description = ' '.join(paragraphs)
+
+        rows.append({
+            'function_name': entry['function'],
+            'title': title,
+            'description': description,
+            'exported': ('export' in tags) or (entry['function'] in exported_in_namespace),
+        })
+    return rows
+
+
 def main(packages_file_path = './output/metadata/packages.json', html_file_path = './output/html/functions.html'):
     """
     Main function to generate an HTML page listing DataSHIELD functions per package.
@@ -47,22 +119,14 @@ def main(packages_file_path = './output/metadata/packages.json', html_file_path 
     with open(packages_file_path, 'r', encoding='utf-8') as packages_file:
         packages = json.load(packages_file)
 
-    # Count packages and functions, and check whether 'exported' metadata is present
+    # Count packages and functions
     number_of_packages = len(packages)
     number_of_functions = 0
-    include_exported = False
 
     for package_info in packages.values():
         repo_info = package_info.get('repo', {})
         if isinstance(repo_info, dict):
-            function_info = repo_info.get('function_info')
-            if isinstance(function_info, list):
-                number_of_functions += len(function_info)
-                if not include_exported:
-                    include_exported = any(
-                        isinstance(func, dict) and 'exported' in func
-                        for func in function_info
-                    )
+            number_of_functions += len(get_function_rows(repo_info))
 
     # Generate the HTML page
     with open(html_file_path, 'w', encoding='utf-8') as html_file:
@@ -90,36 +154,37 @@ def main(packages_file_path = './output/metadata/packages.json', html_file_path 
         for this_package_name, this_package_info in packages.items():
             try:
                 print(f"Processing package: {this_package_name}")
-                pprint(this_package_info)
+                #pprint(this_package_info)
 
                 escaped_package_name = html.escape(this_package_name)
                 html_content = f'\n<h2 id="{escaped_package_name}"><a href="#{escaped_package_name}">{escaped_package_name}</a></h2>\n'
 
                 repo_info = this_package_info.get('repo', {})
                 function_info = repo_info.get('function_info') if isinstance(repo_info, dict) else None
+                function_rows = get_function_rows(repo_info) if isinstance(repo_info, dict) else []
 
                 if function_info == 'Error':
                     html_content += '<p>Error retrieving function metadata for this package.</p>\n'
-                elif isinstance(function_info, list) and len(function_info) > 0:
+                elif function_rows:
                     html_content += '<table>\n'
                     html_content += '<tr>'
                     html_content += '<th>Function name</th>'
                     html_content += '<th>Title</th>'
                     html_content += '<th>Description</th>'
+                    html_content += '<th>Exported</th>'
                     html_content += '</tr>\n'
 
-                    for func in function_info:
-                        if not isinstance(func, dict):
-                            continue
-
-                        function_name = format_metadata_value(func.get('function_name'))
-                        title = format_metadata_value(func.get('title'))
-                        description = format_metadata_value(func.get('description'))
+                    for func in function_rows:
+                        function_name = format_metadata_value(func['function_name'])
+                        title = format_metadata_value(func['title'])
+                        description = format_metadata_value(func['description'])
+                        exported = 'Yes' if func['exported'] else 'No'
 
                         html_content += '<tr>'
                         html_content += f'<td class="left">{function_name}</td>'
                         html_content += f'<td class="left">{title}</td>'
                         html_content += f'<td class="left">{description}</td>'
+                        html_content += f'<td>{exported}</td>'
                         html_content += '</tr>\n'
 
                     html_content += '</table>\n'

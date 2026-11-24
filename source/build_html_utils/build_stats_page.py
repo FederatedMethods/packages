@@ -57,8 +57,8 @@ def main(packages_file_path='./output/metadata/packages.json', html_file_path='.
         top_content += '<h1>DataSHIELD community packages stats</h1>'
         html_file.write(top_content)
 
-        # Number of functions
-        total_functions = sum(len(info.get('repo', {}).get('functions_from_NAMESPACE') or []) for info in packages.values())
+        # Number of functions (exported in the NAMESPACE files)
+        total_functions = sum(len(info.get('repo', {}).get('functions_exported_in_NAMESPACE') or []) for info in packages.values())
 
         # Number of forks
         total_forks = sum(info.get('gh_api', {}).get('fork_count') or 0 for info in packages.values())
@@ -69,18 +69,12 @@ def main(packages_file_path='./output/metadata/packages.json', html_file_path='.
         # Number of watchers
         total_watchers = sum(info.get('gh_api', {}).get('watcher_count') or 0 for info in packages.values())
 
-        # Lines of code (summed from the per-file lines_of_code in function_info)
-        total_lines_of_code = 0
-        for info in packages.values():
-            function_info = info.get('repo', {}).get('function_info')
-            if isinstance(function_info, list):
-                total_lines_of_code += sum(
-                    func.get('lines_of_code') or 0
-                    for func in function_info
-                    if isinstance(func, dict)
-                )
+        # Lines of code. The new function_info structure (roxygen_tags) no longer holds a per-file
+        # lines_of_code, so use a package level repo['lines_of_code'] if present and leave the
+        # figure out of the text if there is no data.
+        total_lines_of_code = sum(info.get('repo', {}).get('function_info', {}).get('number_of_lines_of_code') or 0 for info in packages.values())
 
-        # Nuber of commits (summed from the total_commits in repo)
+        # Number of commits (summed from the total_commits in repo)
         total_commits = sum(info.get('repo', {}).get('total_commits') or 0 for info in packages.values())
 
         html_file.write(f'<p> There are <strong>{len(packages)}</strong> packages developed by the DataSHIELD community, with <strong>{total_functions}</strong> functions spread over <strong>{total_lines_of_code:,}</strong> lines of source code from <strong>{total_commits:,}</strong> commits. These packages have <strong>{total_forks}</strong> forks, <strong>{total_stars}</strong> stars and <strong>{total_watchers}</strong> watchers between them on GitHub. The timeline below shows the development history of these packages, from when they were first created to their most recent commit, going all the way back to the first commit in dsBase in 2013.</p>')

@@ -72,7 +72,7 @@ def main(packages_file_path = './output/metadata/packages.json', html_file_path 
             try:
 
                 print(f"Processing package: {this_package_name}")
-                pprint(this_package_info)
+                #pprint(this_package_info)
 
                 html_content = f"""
                 

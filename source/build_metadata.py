@@ -13,11 +13,12 @@ from pprint import pprint
 import shutil
 import subprocess
 import urllib.request as urllib2
+import urllib.error
 from build_metadata_utils.parse_DESCRIPTION_file import parse_description_file
 from build_metadata_utils.parse_R_files import parse_R_files
 
 
-def main(clone = False, cache_dir = "cache",delete_cache = False, package_input_file = "package_list.csv"):
+def main(clone = False, cache_dir = "cache",delete_cache = False, package_input_file = "package_list.csv", verbose = False):
     """
     Main function to process the package list and gather information from GitHub and CRAN.
     Args:
@@ -115,16 +116,19 @@ def main(clone = False, cache_dir = "cache",delete_cache = False, package_input_
                 print(f"Error getting total commits for package {github_link_end_part}: {e}")
                 package_info['repo']['total_commits'] = None
 
-            # If there is a NAMESPACE file then parse it to get the function input
+            # If there is a NAMESPACE file then parse it to get the exported function names and exportPattern
             if os.path.exists(github_link_end_part + "/NAMESPACE"):
                 print("NAMESPACE file found")
                 with open(github_link_end_part + "/NAMESPACE", "r", encoding="utf-8") as namespace_file:
                     gh_functions = re.findall(r'export\((.*?)\)', namespace_file.read())
                     print(f"Repo functions: {gh_functions}")
-                    package_info['repo']['functions_from_NAMESPACE'] = gh_functions
+                    package_info['repo']['functions_exported_in_NAMESPACE'] = gh_functions
+                    namespace_file.seek(0)  # Reset file pointer to the beginning
+                    package_info['repo']['functions_exportPattern_in_NAMESPACE'] = len(re.findall(r'exportPattern\((.*?)\)', namespace_file.read()))
             else:
                 print("NAMESPACE file not found")
-                package_info['repo']['functions_from_NAMESPACE'] = None
+                package_info['repo']['functions_exported_in_NAMESPACE'] = None
+                package_info['repo']['functions_exportPattern_in_NAMESPACE'] = None
 
             # Get the LICENSE file in the repo and parse it to get the license type
             if os.path.exists(github_link_end_part + "/LICENSE.md"):
@@ -230,7 +234,8 @@ def main(clone = False, cache_dir = "cache",delete_cache = False, package_input_
                 print(type(e))
 
 
-    pprint(packages)
+    if verbose:
+        pprint(packages)
 
     # Output to file
     os.chdir("..")

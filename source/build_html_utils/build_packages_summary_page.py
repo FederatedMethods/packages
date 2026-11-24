@@ -91,7 +91,7 @@ def main(packages_file_path = './output/metadata/packages.json', html_file_path 
         #for row in package_list:
         for this_package_name, this_package_info in packages.items():
             print(f"######\nProcessing package: {this_package_name}")
-            pprint(this_package_info)
+            #pprint(this_package_info)
             this_row = ""
 
             # Add anchor

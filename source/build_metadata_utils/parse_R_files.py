@@ -3,14 +3,15 @@ import re
 import sys
 from pathlib import Path
 import yaml
-from .helper_parse_R_files import extract_fields
+#from .helper_parse_R_files import extract_fields
+from .helper_parse_R_files import parse_roxygen_blocks
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
 if str(PROJECT_ROOT / "source") not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT / "source"))
 
 
-def parse_R_files(package_name=None, github_link_end_part=None):
+def parse_R_files(package_name, github_link_end_part):
 
     # Load configuration
     config_path = PROJECT_ROOT / "config" / "metadata_fields.yml"
@@ -37,22 +38,34 @@ def parse_R_files(package_name=None, github_link_end_part=None):
         test_files = [path for path in os.listdir(tests_dir) if os.path.isfile(os.path.join(tests_dir, path))]
 
     functions_metadata = []
+    roxygen_tags = []
+    number_of_lines_of_code = 0
+
     for this_r_file in package_r_files:
 
         print(f"Extracting metadata from {this_r_file} in package {package_name}")
         # Extract metadata from each R file according to the specified fields in the config file
-        function_name = os.path.basename(this_r_file)
-        test_file = any(function_name in test_file_name for test_file_name in test_files)
-        metadata = extract_fields(str(github_link_end_part + "/R/" + this_r_file), fields)
-        row = {
-            "file": str(github_link_end_part + "/R/" + this_r_file),
-            "package": package_name,
-            "function_name": function_name,
-            "test_file": test_file,
-            **metadata,
-        }
+        file_name = os.path.basename(this_r_file)
+        #test_file = any(function_name in test_file_name for test_file_name in test_files)
+        #metadata = extract_fields(str(github_link_end_part + "/R/" + this_r_file), fields)
+        #row = {
+        #    "file": str(github_link_end_part + "/R/" + this_r_file),
+        #    "package": package_name,
+        #    "function_name": function_name,
+        #    "test_file": test_file,
+        #    **metadata,
+        #}
 
-        architecture_type = "other"
+        # Extract roxygen blocks from the R file
+        with open(str(github_link_end_part + "/R/" + this_r_file), "r", encoding="utf-8", errors="replace") as handle:
+            lines = handle.read()
+            number_of_lines_of_code += len(lines.splitlines())
+            roxygen_tags.extend(parse_roxygen_blocks(lines))
+
+    #print(roxygen_tags)
+    return {"roxygen_tags": roxygen_tags, "number_of_lines_of_code": number_of_lines_of_code}
+
+"""         architecture_type = "other"
         if re.search(arch["client_function_pattern"], function_name):
             architecture_type = "client"
         elif re.search(arch["server_function_pattern"], function_name):
@@ -77,7 +90,7 @@ def parse_R_files(package_name=None, github_link_end_part=None):
         functions_metadata.append(row)
 
     return functions_metadata
-
+ """
 
 if __name__ == "__main__":
     parse_R_files("dsAnalysis", "dsAnalysis")
